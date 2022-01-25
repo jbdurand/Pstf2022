@@ -1,25 +1,11 @@
-//============================================================================
-// Name        : Tests.cpp
-// Author      : J.B. Durand & O. Taramasco
-// Version     :
-// Copyright   : Cecill
-// Description : Hello World in C++, Ansi-style
-//============================================================================
+// Test.cpp : definit le point d'entree pour l'application console.
+//
 
-#include <iostream>
-using namespace std;
-
-#include <vector>
-#include <gsl/gsl_math.h>
-#include "StdAfxError.h"
-#include "StdAfxVectorAndMatrix.h"
 #include "StdAfxTestCPlusPlus.h"
-
-//#include "cGSLVector.h"
-//#include "cGSLMatrix.h"
 
 using namespace ErrorNameSpace;
 using namespace VectorAndMatrixNameSpace;
+using namespace RegArchLib ;
 
 #ifdef WIN32
 int _tmain(int argc, _TCHAR* argv[])
@@ -27,41 +13,45 @@ int _tmain(int argc, _TCHAR* argv[])
 int main(int argc, char* argv[])
 #endif //WIN32
 {
-	unsigned int i;
+	cout.precision(12) ; 
 
-	cGSLVector vec(3), res_produit_vec(0);
-	cGSLMatrix mat(2,3), res_produit_mat(0);
-	std::vector<double> std_vec(0);
+	/*********
+	 * ARMA pur
+	 *******/
+	cConst myConst(0.1);
+	
+	cAr	myAr(2) ;
+	
+	myAr.Set(.8, 0) ;
+	myAr.Set(-.2, 1) ;
+	myAr.Print() ;
+	
+	cMa myMa(2) ;
+	myMa.Set(0.8, 0) ;
+	myMa.Set(0.6, 1) ;
+	
+	cCondMean myCondMeanArma ;
+	myCondMeanArma.SetOneMean(0, myConst) ;
+	myCondMeanArma.SetOneMean(1, myAr) ;
+	myCondMeanArma.SetOneMean(2, myMa) ;
+	
+	cConstCondVar myConstVar(1.0) ;
+	
+	cNormResiduals myNormResid ;
 
-	for(i = 0; i < 3; i++)
-		vec[i] = i+1;
+	cRegArchModel myModelArma ;
+	myModelArma.SetMean(myCondMeanArma) ;
+	myModelArma.SetResid(myNormResid) ;
+	myModelArma.SetVar(myConstVar) ;
+	cout << "Modele : " ;
+	myModelArma.Print() ;
+	
+	cRegArchModel myModelArmaCp(myModelArma) ;
+	cout << "Copie du modele : " ;
+	myModelArmaCp.Print() ;
 
-	cout << "Multiplication du vecteur :" << endl;
-	vec.Print();
 
-	for(i = 0; i < 3; i++)
-	{
-		(mat[0])[i] = i + 1;
-		(mat[1])[i] = 3 + i + 1;
-	}
-	cout << "... par la matrice : " << endl;
-	mat.Print();
+	return 0 ;
 
-	res_produit_mat = mat;
-	res_produit_mat *= vec;
-	res_produit_vec = res_produit_mat;
-
-	cout << "Resultat : " << endl;
-	res_produit_vec.Print();
-
-	std_vec.resize(vec.GetSize());
-	for(i=0; i < std_vec.size(); i++)
-	{
-		std_vec[i] = gsl_expm1((double)(vec)[i]);
-		vec[i] = std_vec[i];
-	}
-
-	cout << "Exponentielle - 1 du vecteur initial : " <<endl;
-	vec.Print();
 
 }
