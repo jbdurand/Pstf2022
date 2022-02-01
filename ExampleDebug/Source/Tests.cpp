@@ -29,15 +29,11 @@ int main(int argc, char* argv[])
         myVectorCollection[i] = new cDVector(i+1, i*0.1);
     }
 
-    for (i=0; i < 10; i++)  
-    {
-        v = (*myVectorCollection[0])[i];
-    }
     
     for (i=0; i < 11; i++)  
     {
         delete myVectorCollection[i];
-        // myVectorCollection[i] = NULL;
+        myVectorCollection[i] = NULL;
     }
     
     myVectorCollection[9]->Print(cout);

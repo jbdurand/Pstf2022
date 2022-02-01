@@ -20,7 +20,6 @@ namespace RegArchLib {
 	class _DLLEXPORT_ cArch: public cAbstCondVar
 	{
 	private :
-		double mvConst ; ///< Constant part of ARCH(p) variance model.
 		cDVector mvArch ; ///< Vector of ARCH coefficients. 
 	public :
 		cArch(uint theNArch = 0) ; ///< A simple constructor
@@ -28,14 +27,12 @@ namespace RegArchLib {
 		virtual cAbstCondVar* PtrCopy() const ; /// < Return a copy of *this		
 		void Delete(void) ; ///< Free memory
 		void Print(ostream& theOut=cout) const ; ///< Print the ARCH(p) parameters
-		void SetDefaultInitPoint(double theMean, double theVar) ;
 		void Set(double theValue, uint theIndex=0, uint theNumParam=0) ; ///< Set model parameters.
 		void Set(const cDVector& theVectParam, uint theNumParam=0) ; ///< Set model parameters.
 		double Get(uint theIndex=0, uint theNumParam=0) ;
 		void ReAlloc(uint theSize, uint theNumParam=0) ; ///< Allocation of the model parameters
 		void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) ; ///< Allocation of the model parameters
-		cAbstCondVar& operator=(cAbstCondVar& theSrc) ; ///< affectation operator for cArch
-		uint GetNParam(void) const ;
+		uint GetNParam(void) const ; ///< Number of parameters in that model part
 	private :
 		void copy(const cArch& theArch) ; /// < Copy attribute from instance
 	} ;

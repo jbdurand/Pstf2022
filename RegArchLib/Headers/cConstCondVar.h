@@ -34,6 +34,7 @@ namespace RegArchLib {
 		void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) ; ///< Allocation of the model parameters
 		cAbstCondVar& operator=(cAbstCondVar& theSrc) ; ///< affectation operator for cConstCondVar
 		uint GetNParam(void) const ;
+
 	private :
 		void copy(const cConstCondVar& theCondVar) ; /// < Copy attribute from instance
 	

@@ -8,12 +8,12 @@
         <itemPath>Headers/RegArchCompute.h</itemPath>
         <itemPath>Headers/RegArchDef.h</itemPath>
         <itemPath>Headers/StdAfxRegArchLib.h</itemPath>
-        <itemPath>Headers/cAbstCondMean.h</itemPath>
         <itemPath>Headers/cAbstCondVar.h</itemPath>
         <itemPath>Headers/cAbstResiduals.h</itemPath>
         <itemPath>Headers/cAr.h</itemPath>
         <itemPath>Headers/cArch.h</itemPath>
         <itemPath>Headers/cCondMean.h</itemPath>
+        <itemPath>Headers/cCondVar.h</itemPath>
         <itemPath>Headers/cConst.h</itemPath>
         <itemPath>Headers/cConstCondVar.h</itemPath>
         <itemPath>Headers/cGarch.h</itemPath>
@@ -109,8 +109,6 @@
       </item>
       <item path="Headers/StdAfxRegArchLib.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/cAbstCondMean.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Headers/cAbstCondVar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cAbstResiduals.h" ex="false" tool="3" flavor2="0">
@@ -120,6 +118,8 @@
       <item path="Headers/cArch.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cCondMean.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cCondVar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cConst.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -192,8 +192,6 @@
       </item>
       <item path="Headers/StdAfxRegArchLib.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/cAbstCondMean.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Headers/cAbstCondVar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cAbstResiduals.h" ex="false" tool="3" flavor2="0">
@@ -203,6 +201,8 @@
       <item path="Headers/cArch.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cCondMean.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cCondVar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/cConst.h" ex="false" tool="3" flavor2="0">
       </item>
