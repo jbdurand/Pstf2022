@@ -1,5 +1,4 @@
-// Test.cpp : definit le point d'entree pour l'application console.
-//
+// Test.cpp : definit le point d'entree pour l'application console.//
 
 #include "StdAfxTestCPlusPlus.h"
 
@@ -49,6 +48,24 @@ int main(int argc, char* argv[])
 	cRegArchModel myModelArmaCp(myModelArma) ;
 	cout << "Copie du modele : " ;
 	myModelArmaCp.Print() ;
+
+
+	// Moyennes conditionnelles
+	uint myNData = 25 ;
+	cRegArchValue myGivenValue(myNData) ;
+	for(uint t=0; t < myGivenValue.mYt.GetSize(); t++)
+	{
+		myGivenValue.mYt[t] = t;
+	}
+	cDVector myMeans(myNData);
+	for(uint t=0; t < myGivenValue.mYt.GetSize(); t++)
+	{
+		myMeans[t] = myCondMeanArma.ComputeMean(t, myGivenValue);
+		myGivenValue.mUt[t] = myGivenValue.mYt[t] - myMeans[t];
+		myGivenValue.mMt[t] = myMeans[t];
+	}
+	cout << "Moyennes conditionnelles ARMA pur gaussien: " << endl ;
+	myMeans.Print();
 
 
 	return 0 ;

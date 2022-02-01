@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+/VectorAndMatrix/build/
+/VectorAndMatrix/dist/
+/Tests/build/
+/Error/dist/
+/Error/build/
