@@ -13,6 +13,9 @@
 #include "StdAfxVectorAndMatrix.h"
 
 #include "RegArchDef.h"
+#include "cAbstCondMean.h"
+#include "cAbstCondVar.h"
+#include "cAbstResiduals.h"
 
 #include "cClassExample.h" // A mettre a jour
 #define WIN32_LEAN_AND_MEAN             // Exclure les en-tetes Windows rarement utilises
