@@ -121,30 +121,6 @@ namespace RegArchLib {
 		mvMa = theVectParam ;
 	}
 
-	/*!
-	 * \fn cAbstCondMean& cMa::operator =(const cAbstCondMean &theSrc)
-	 * \param cAbstCondMean &theSrc: source to be recopied
-	 * \details an error occurs if theSrc is not an cMA class parameter 
-	 */
-
-	/*!
-	 * \fn cAbstCondMean& cAr::operator =(cAbstCondMean& theSrc)
-	 * \param cAbstCondMean& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cAr class parameter
-	 */
-	cAbstCondMean& cMa::operator =(cAbstCondMean& theSrc)
-	{
-		cMa* myMa = dynamic_cast<cMa *>(&theSrc) ;
-		if (myMa)
-		{	
-			copy(*myMa) ;
-			SetCondMeanType(eMa) ;
-		}
-		else
-			throw cError("wrong conditional mean class") ;
-		return *this ;
-	}
-
 	uint cMa::GetNParam(void) const
 	{
 		// complete

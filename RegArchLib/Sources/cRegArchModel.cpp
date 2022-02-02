@@ -59,16 +59,16 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn cRegArchModel& cRegArchModel::operator=(cRegArchModel& theRegArchModel)
-	 * \param cRegArchModel& theRegArchModel: the source
-	 * \details = operator for cRegArchModel
+	 * \fn void cRegArchModel::GetNMean(void)
+	 * \param void
+	 * \details return the number of mean components
 	 */
-	cRegArchModel& cRegArchModel::operator=(cRegArchModel& theRegArchModel)
+	int cRegArchModel::GetNMean(void)
 	{
-		*mMean =  *(theRegArchModel.mMean) ;
-		*mVar = *(theRegArchModel.mVar) ;
-		*mResids = *(theRegArchModel.mResids) ;
-		return *this ;
+		if (mMean == NULL)
+			return 0 ;
+		else
+			return mMean->GetNMean() ;
 	}
 
 	void cRegArchModel::ReAllocMean(uint theNewSize)
@@ -141,7 +141,6 @@ namespace RegArchLib {
 			return false ;
 	}
 
-
 	/*!
 	 * \fn void cRegArchModel::PrintMean(ostream& theOut) const
 	 * \param ostream& theOut: output stream (screen or file). Default: cout
@@ -151,12 +150,14 @@ namespace RegArchLib {
     		mMean->Print(theOut) ;
     }
 
-	void cRegArchModel::SetVar(theCondVar)
+	/*!
+	 * \fn int cRegArchModel::GetNVar(void)
+	 * \param void
+	 * \details return the number of variance components
+	 */
+	int cRegArchModel::GetNVar(void)
 	{
-		// complete
-	}
 
-	cRegArchModel::GetVar(void)
 	{
 		// complete
 	}
@@ -166,11 +167,16 @@ namespace RegArchLib {
 	 * \param ostream& theOut: output stream (screen or file). Default: cout
 	 */
 	void cRegArchModel::PrintVar(ostream& theOut) const
-{	if (mVar != NULL)
-		mVar->Print(theOut);
-}
+    {	
+		if (mVar != NULL)
+    		mVar->Print(theOut);
+    }
 
-	void cRegArchModel::SetResid(theCondResiduals)
+	/*!
+	 * \fn void cRegArchModel::SetResid(cAbstResiduals& theCondResiduals)
+	 * \param cAbstResiduals& theCondResiduals: the conditional residuals model
+	 */
+	void cRegArchModel::SetResid(cAbstResiduals& theCondResiduals)
 	{
 		// complete
 	}
@@ -201,8 +207,6 @@ namespace RegArchLib {
     	theOut << endl ;
     	PrintMean(theOut) ;
     	theOut << endl ;
-    	theOut << "Conditional variance parameters:" << endl ;
-    	theOut << "--------------------------------" << endl ;
     	PrintVar(theOut) ;
     	theOut << endl ;
     

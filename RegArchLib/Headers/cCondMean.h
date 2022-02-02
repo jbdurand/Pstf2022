@@ -40,10 +40,9 @@ namespace RegArchLib {
 		// GetOneMean(uint theIndex) const ; ///< Return a pointer to the given mean component  (no object is allocated)
 		void Print(ostream& theOut=cout) const ; ///< Print the conditional mean model
 		friend ostream& operator <<(ostream& theOut, const cCondMean& theCondMean) ; ///< Print the conditional mean model
-		void SetDefaultInitPoint(double theMean, double theVar) ;
 		void GetCondMeanType(eCondMeanEnum* theCodeType) const ; ///< Return the type of each mean component	
 		cCondMean& operator =(cCondMean& theSrc) ; ///< affectation operator
-		double ComputeMean(uint theDate, const cRegArchValue& theData) const ; ///< Return conditional mean.
+		// double ComputeMean() // Complete
 		/** Number of parameters in CondMean */
 		uint GetNParam(void) const ;
 	} ;

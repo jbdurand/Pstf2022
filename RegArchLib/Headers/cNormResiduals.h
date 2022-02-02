@@ -23,8 +23,8 @@ namespace RegArchLib {
 	public :
 		cNormResiduals(const cDVector* theDistrParameter=NULL, bool theSimulFlag=true) ; ///< a simple constructor
 		virtual ~cNormResiduals() ; ///< a simple destructor
+		virtual cAbstResiduals* PtrCopy() const ; /// < Return a copy of *this
 		void Print(ostream& theOut) const ; ///< print the distribution type
-		void SetDefaultInitPoint(void) ;
 		void Generate(uint theNSample, cDVector& theYt) const ; ///< Draw a sample from residual distribution 
 		double LogDensity(double theX) const ;
 		/** Return the number of parameters in distribution */

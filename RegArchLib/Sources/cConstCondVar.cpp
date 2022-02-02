@@ -106,23 +106,6 @@ namespace RegArchLib {
 		return mvCste ;
 	}
 
-	/*!
-	 * \fn cAbstCondVar& cConstCondVar::operator =(cAbstCondVar& theSrc)
-	 * \param cAbstCondVar& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cConstCondVar class parameter
-	 */
-	cAbstCondVar& cConstCondVar::operator =(cAbstCondVar& theSrc)
-	{
-	cConstCondVar* myConstCondVar = dynamic_cast<cConstCondVar *>(&theSrc) ;
-		if (myConstCondVar)
-		{	
-			copy(*myConstCondVar) ;
-		}
-		else
-			throw cError("wrong conditional variance class") ;
-		return *this ;
-	}
-
 	uint cConstCondVar::GetNParam(void) const
 	{
 		// complete

@@ -33,15 +33,15 @@ namespace RegArchLib {
 	
 		cAbstResiduals(eDistrTypeEnum theDistr, cDVector* theDistrParam=NULL, bool theSimulFlag=true) ; ///< A simple constructor
 		virtual ~cAbstResiduals() ; ///< A simple destructor
+		virtual cAbstResiduals* PtrCopy() const = 0 ; /// < Return a copy of *this
 		void Delete(void) ; ///< Delete
 		eDistrTypeEnum GetDistrType(void) const ; ///< Return the distribution type
-		cAbstResiduals& operator =(const cAbstResiduals& theSrc) ;	///< affectation operator for cAbstResiduals
 		void SetSimul(void) ; ///< Change for simulation
 		double Get(uint theIndex=0) ;
 		void Set(double theValue, uint theIndex=0) ;
 		virtual void Print(ostream& theOut=cout) const=0 ; ///< Print the distribution type
 		friend ostream& operator <<(ostream& theOut, const cAbstResiduals& theAbstResisuals) ; ///< Print the distribution type
-		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution 
+		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution
 		virtual double LogDensity(double theX) const=0 ; ///< log density function
 		/** Return the number of parameters in distribution */
 		virtual uint GetNParam(void) const = 0 ;

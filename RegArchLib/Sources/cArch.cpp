@@ -45,18 +45,8 @@ namespace RegArchLib {
 	{
 	uint myNArch = mvArch.GetSize() ;
 		theOut << "ARCH(" << myNArch << ") model with:" << endl ;
-		theOut << "\tCste=" << mvConst << endl ;
 		for (register uint i = 0 ; i < mvArch.GetSize() ; i++)
 			theOut << "\tARCH[" << i+1 << "]=" << mvArch[i] << endl ;
-	}
-
-	void cArch::SetDefaultInitPoint(double theMean, double theVar)
-	{
-		mvConst = theVar*0.1 ;
-	uint myNArch = mvArch.GetSize() ;
-	uint i ;
-		for (i = 0 ; i < myNArch ; i++)
-			mvArch[i] = 0.9/(double)myNArch ;
 	}
 
 	/*!
@@ -79,12 +69,6 @@ namespace RegArchLib {
 	void cArch::ReAlloc(const cDVector& theVectParam, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0: // mvConst
-				if (theVectParam.GetSize() > 0)
-					mvConst = theVectParam[0] ;
-				else
-					throw cError("cArch::ReAlloc - Size of theVectParam must be > 0") ;
-			break ;
-			case 1 : // mvArch
 				mvArch = theVectParam ;
 			break ;
 			default :
@@ -104,9 +88,6 @@ namespace RegArchLib {
 	void cArch::Set(double theValue, uint theIndex, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
-				mvConst = theValue ;
-			break ;
-			case 1 :
 				if (theIndex < mvArch.GetSize())
 					mvArch[theIndex] = theValue ;
 				else
@@ -118,16 +99,15 @@ namespace RegArchLib {
 		}
 	}
 
-	double  cArch::Get(uint theIndex, uint theNumParam)
+	double cArch::Get(uint theIndex, uint theNumParam)
 	{
+		double res = 0.0;
 		switch (theNumParam)
 		{	case 0 :
-				return mvConst ;
-			break ;
-			case 1 :
-				return mvArch[theIndex] ;
+				res = mvArch[theIndex] ;
 			break ;
 		}
+		return res;
 	}
 
 
@@ -141,12 +121,6 @@ namespace RegArchLib {
 	void cArch::Set(const cDVector& theVectParam, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
-				if (theVectParam.GetSize() > 0)
-					mvConst = theVectParam[0] ;
-				else
-					throw cError("cArch::Set - Size of theVectParam must be > 0") ;
-			break ;
-			case 1 :
 				mvArch = theVectParam ;
 			break ;
 			default:
@@ -182,7 +156,6 @@ namespace RegArchLib {
 
 	void cArch::copy(const cArch& theArch)
 	{
-		mvConst = theArch.mvConst ;
 		mvArch = theArch.mvArch;
 	}
 	

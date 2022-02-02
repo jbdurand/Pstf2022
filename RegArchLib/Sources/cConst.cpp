@@ -28,7 +28,7 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn cAbstCondMean* cMa::PtrCopy()
+	 * \fn cAbstCondMean* cConst::PtrCopy()
 	 */
 	cAbstCondMean* cConst::PtrCopy() const
 	{
@@ -108,24 +108,6 @@ namespace RegArchLib {
 			mvConst = theVectParam[0] ;
 		else
 			throw cError("Size of 'theVectParam' must be > 0") ;
-	}
-
-	/*!
-	 * \fn cAbstCondMean& cConst::operator =(cAbstCondMean &theSrc)
-	 * \param cAbstCondMean &theSrc
-	 * \details theSrc must be a cConst parameter
-	 */
-	cAbstCondMean& cConst::operator =(cAbstCondMean& theSrc)
-	{
-		cConst* myConst = dynamic_cast<cConst *>(&theSrc) ;
-		if (myConst)
-		{	
-			copy(*myConst) ;
-			SetCondMeanType(eConst) ;
-		}
-		else
-			throw cError("wrong conditional mean class") ;
-		return *this ;
 	}
 
 	uint cConst::GetNParam(void) const

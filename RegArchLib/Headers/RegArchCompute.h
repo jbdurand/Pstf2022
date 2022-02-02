@@ -4,6 +4,8 @@
 
 #include "cRegArchModel.h"
 #include "cRegArchValue.h"
+namespace RegArchLib {
+// using namespace RegArchLib;
 
 /*!
  \file RegArchCompute.h
@@ -14,7 +16,8 @@
 */
 /* namespace RegArchLib {
 // please complete function profile
-extern _DLLEXPORT_ RegArchSimul() ; ///< Simulation of a general RegArch Model
+	extern _DLLEXPORT_ void RegArchSimul() ; ///< Simulation of a general RegArch Model
+	///< Add some function RegArchLLH to compute log-likelihood
 }*/
 
 #endif //_REGARCHCOMPUTE_H_

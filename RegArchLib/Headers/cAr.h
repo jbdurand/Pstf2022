@@ -28,14 +28,13 @@ namespace RegArchLib {
 		virtual cAbstCondMean* PtrCopy() const ; /// < Return a copy of *this
 		void Delete(void) ; ///< Delete mvAr
 		void Print(ostream& theOut=cout) const ; ///< Print the parameters
-		void SetDefaultInitPoint(double theMean, double theVar) ;
 		void Set(double theValue, uint theIndex=0, uint theNumParam=0) ; ///< Set model parameters.
 		void Set(const cDVector& theVectParam, uint theNumParam=0) ; ///< Set model parameters.
 		double Get(uint theIndex=0, uint theNumParam=0) ;
 		void ReAlloc(uint theSize, uint theNumParam=0) ; ///< Allocation of the model parameters
 		void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) ; ///< Allocation of the model parameters
-		cAbstCondMean& operator=(cAbstCondMean& theSrc) ; ///< Standard affectation
-		uint GetNParam(void) const ;
+		uint GetNParam(void) const ; ///< Number of parameters in that model part
+
 	protected :
 		void copy(const cAr& theAr) ; /// < Copy attribute from instance
 
