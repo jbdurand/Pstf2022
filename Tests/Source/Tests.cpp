@@ -1,6 +1,8 @@
-// Test.cpp : definit le point d'entree pour l'application console.//
+// Test.cpp : definit le point d'entree pour l'application console.
+//
 
 #include "StdAfxTestCPlusPlus.h"
+#include "StdAfxRegArchLib.h"
 
 using namespace ErrorNameSpace;
 using namespace VectorAndMatrixNameSpace;
@@ -15,8 +17,10 @@ int main(int argc, char* argv[])
 	cout.precision(12) ; 
 
 	/*********
-	 * ARMA pur
+	 * ARMA / GARCH
 	 *******/
+        
+        // cCondMean
 	cConst myConst(0.1);
 	
 	cAr	myAr(2) ;
@@ -33,19 +37,33 @@ int main(int argc, char* argv[])
 	myCondMeanArma.SetOneMean(0, myConst) ;
 	myCondMeanArma.SetOneMean(1, myAr) ;
 	myCondMeanArma.SetOneMean(2, myMa) ;
-	
-	cConstCondVar myConstVar(1.0) ;
-	
+
+        // cCondVar
+
+        cCondVar myCondVarGarch ;
+	cConstCondVar myConstVar(1.) ;
+                
+	cArch myArch(2) ;
+	myArch.Set(0.1, 0) ;
+	myArch.Set(0.2, 1) ;
+
+        cGarch myGarch(1) ;
+	myGarch.Set(0.4, 0) ;
+
+        myCondVarGarch.SetOneVar(0, myConstVar);
+        myCondVarGarch.SetOneVar(1, myArch);
+        myCondVarGarch.SetOneVar(2, myGarch) ;
+
 	cNormResiduals myNormResid ;
 
-	cRegArchModel myModelArma ;
-	myModelArma.SetMean(myCondMeanArma) ;
-	myModelArma.SetResid(myNormResid) ;
-	myModelArma.SetVar(myConstVar) ;
+	cRegArchModel myModelArmaGarch ;
+	myModelArmaGarch.SetMean(myCondMeanArma) ;
+	myModelArmaGarch.SetResid(myNormResid) ;
+	myModelArmaGarch.SetVar(myCondVarGarch) ;
 	cout << "Modele : " ;
-	myModelArma.Print() ;
+	myModelArmaGarch.Print() ;
 	
-	cRegArchModel myModelArmaCp(myModelArma) ;
+	cRegArchModel myModelArmaCp(myModelArmaGarch) ;
 	cout << "Copie du modele : " ;
 	myModelArmaCp.Print() ;
 
@@ -57,16 +75,32 @@ int main(int argc, char* argv[])
 	{
 		myGivenValue.mYt[t] = t;
 	}
-	cDVector myMeans(myNData);
+
+	cDVector myMeans(myNData);	
+        // Moyennes conditionnelles
+
 	for(uint t=0; t < myGivenValue.mYt.GetSize(); t++)
 	{
-		myMeans[t] = myCondMeanArma.ComputeMean(t, myGivenValue);
+		myMeans[t] = myModelArmaGarch.ComputeMean(t, myGivenValue);
 		myGivenValue.mUt[t] = myGivenValue.mYt[t] - myMeans[t];
 		myGivenValue.mMt[t] = myMeans[t];
 	}
-	cout << "Moyennes conditionnelles ARMA pur gaussien: " << endl ;
+	cout << "Moyennes conditionnelles ARMA pur gaussien : " << endl ;
 	myMeans.Print();
 
+	// Simulation
+	uint myNSample = 10;
+	cRegArchValue mySimulData;
+	cDVector mySimulVector(myNSample);
+	RegArchLib::RegArchSimul() ;
+	cout << "Valeurs simulees : " << endl ;
+	mySimulVector = mySimulData.mYt;
+	mySimulVector.Print();
+        
+        // Calcul de vraisemblance
+        double myLoglikelihood = 0.;
+        myLoglikelihood = RegArchLLH(myModelArmaGarch, myGivenValue);
+        cout << "Log-vraisemblance : " << myLoglikelihood << endl;
 
 	return 0 ;
 
