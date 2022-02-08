@@ -157,6 +157,7 @@ namespace RegArchLib {
 
 	uint cArch::GetNParam(void) const
 	{
+<<<<<<< HEAD
 		return mvArch.GetSize() ;
 	}
 
@@ -184,6 +185,9 @@ namespace RegArchLib {
 		if (GetNParam() + theIndex > mySize)
 			throw cError("Wrong size") ;
 		mvArch.SetThisWithSubVector(theSrcVect, theIndex) ;
+=======
+		// complete
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	}
 
 	void cArch::copy(const cArch& theArch)

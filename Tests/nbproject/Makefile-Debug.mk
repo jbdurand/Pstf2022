@@ -52,7 +52,11 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
+<<<<<<< HEAD
 LDLIBSOPTIONS=-L../RegArchLib/dist/Debug/GNU-Linux -L../VectorAndMatrix/build/Debug/GNU-Linux-x86 -L../Error/build/Debug/GNU-Linux-x86 -Wl,-rpath,'../RegArchLib/dist/Debug/GNU-Linux' -L../RegArchLib/dist/Debug/GNU-Linux -lRegArchLib -Wl,-rpath,'../VectorAndMatrix/dist/Debug/GNU-Linux' -L../VectorAndMatrix/dist/Debug/GNU-Linux -lVectorAndMatrix -Wl,-rpath,'../Error/dist/Debug/GNU-Linux' -L../Error/dist/Debug/GNU-Linux -lError -lgsl -lgslcblas
+=======
+LDLIBSOPTIONS=-L../RegArchLib/build/Debug/GNU-Linux-x86 -L../VectorAndMatrix/build/Debug/GNU-Linux-x86 -L../Error/build/Debug/GNU-Linux-x86 -Wl,-rpath,'../RegArchLib/dist/Debug/GNU-Linux' -L../RegArchLib/dist/Debug/GNU-Linux -lRegArchLib -Wl,-rpath,'../VectorAndMatrix/dist/Debug/GNU-Linux' -L../VectorAndMatrix/dist/Debug/GNU-Linux -lVectorAndMatrix -Wl,-rpath,'../Error/dist/Debug/GNU-Linux' -L../Error/dist/Debug/GNU-Linux -lError -lgsl -lgslcblas
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

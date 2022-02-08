@@ -38,7 +38,10 @@ namespace RegArchLib {
 		virtual double Get(uint theIndex=0, uint theNumParam=0) = 0 ;
 		virtual void ReAlloc(uint theSize, uint theNumParam=0) = 0 ; ///< Allocation of the model parameters
 		virtual void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) = 0 ; ///< Allocation of the model parameters
+<<<<<<< HEAD
 		virtual double ComputeVar(uint theDate, const cRegArchValue& theData) const=0 ; ///< Return conditional variance.
+=======
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		/** Return the number of parameters in CondVar */
 		virtual uint GetNParam(void) const = 0 ;
 		virtual uint GetNLags(void) const = 0 ; ///< Number of past gradients required to compute gradient at current time t.

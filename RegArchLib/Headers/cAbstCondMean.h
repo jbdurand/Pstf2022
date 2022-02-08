@@ -4,7 +4,10 @@
 
 #include "RegArchDef.h"
 #include "cRegArchValue.h"
+<<<<<<< HEAD
 #include "cRegArchGradient.h"
+=======
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 /*!
 	\file cAbstCondMean.h
 	\brief Definition of the abstract class to implement a conditional mean component
@@ -27,6 +30,10 @@ namespace RegArchLib {
 		eCondMeanEnum	mvCondMeanType ; ///<  Code for the mean type
 	public :
 		cAbstCondMean(const eCondMeanEnum theType=eUnknown) ; ///< A constructor
+<<<<<<< HEAD
+=======
+		//cAbstCondMean(cAbstCondMean& theAbstCondMean) ; /// Recopy constructor
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		virtual ~cAbstCondMean() ; ///< Destructor
 		virtual cAbstCondMean* PtrCopy() const = 0 ; /// < Return a copy of *this
 		eCondMeanEnum GetCondMeanType(void) const ; ///< Return the mean type code
@@ -38,6 +45,7 @@ namespace RegArchLib {
 		virtual void Set(const cDVector& theVectParam, uint theNumParam=0) = 0 ; ///< Set model parameters.
 		virtual double Get(uint theIndex=0, uint theNumParam=0) = 0 ;
 		virtual void ReAlloc(uint theSize, uint theNumParam=0) = 0 ; ///< Allocation of the model parameters
+<<<<<<< HEAD
 		virtual void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) = 0 ; ///< Allocation of the model parameters
 		virtual double ComputeMean(uint theDate, const cRegArchValue& theData) const = 0 ; ///< Compute conditional mean.
 		/** Return the number of parameters in CondMean */
@@ -46,6 +54,11 @@ namespace RegArchLib {
 		virtual void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals) = 0 ;
 		virtual void RegArchParamToVector(cDVector& theDestVect, uint theIndex = 0) = 0 ;
 		virtual void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) = 0 ;
+=======
+		virtual void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) = 0 ; ///< Allocation of the model parameters
+		/** Return the number of parameters in CondMean */
+		virtual uint GetNParam(void) const = 0 ;
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 
 	} ;
 }

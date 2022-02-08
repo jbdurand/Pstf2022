@@ -26,7 +26,11 @@ namespace RegArchLib {
 		virtual ~cNormResiduals() ; ///< a simple destructor
 		virtual cAbstResiduals* PtrCopy() const ; /// < Return a copy of *this
 		void Print(ostream& theOut) const ; ///< print the distribution type
+<<<<<<< HEAD
 		void Generate(uint theNSample, cDVector& theEpst) const ; ///< Draw a sample from residual distribution 
+=======
+		void Generate(uint theNSample, cDVector& theYt) const ; ///< Draw a sample from residual distribution 
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		double LogDensity(double theX) const ;
 		/** Return the number of parameters in distribution */
 		uint GetNParam(void) const ;

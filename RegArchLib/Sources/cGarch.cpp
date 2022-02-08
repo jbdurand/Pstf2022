@@ -161,6 +161,7 @@ namespace RegArchLib {
 		}
 	}
 
+<<<<<<< HEAD
 	/*!
 	 * \fn double cGarch::ComputeVar(uint theDate, const cRegArchValue& theData) const
 	 * \param int theDate: date of computation
@@ -173,6 +174,8 @@ namespace RegArchLib {
 
 	}
 
+=======
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	uint cGarch::GetNParam(void) const
 	{
 		return mvGarch.GetSize() ;

@@ -54,7 +54,11 @@
         </ccTool>
         <linkerTool>
           <linkerAddLib>
+<<<<<<< HEAD
             <pElem>../RegArchLib/dist/Debug/GNU-Linux</pElem>
+=======
+            <pElem>../RegArchLib/build/Debug/GNU-Linux-x86</pElem>
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
             <pElem>../VectorAndMatrix/build/Debug/GNU-Linux-x86</pElem>
             <pElem>../Error/build/Debug/GNU-Linux-x86</pElem>
           </linkerAddLib>

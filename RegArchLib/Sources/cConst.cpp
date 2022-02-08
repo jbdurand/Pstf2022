@@ -28,6 +28,17 @@ namespace RegArchLib {
 	}
 
 	/*!
+<<<<<<< HEAD
+=======
+	 * \fn cAbstCondMean* cConst::PtrCopy()
+	 */
+	cAbstCondMean* cConst::PtrCopy() const
+	{
+		// complete
+	}
+
+	/*!
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	 * \fn void cConst::Delete(void)
 	 * \\details Delete. Nothing to do.
 	 */
@@ -114,6 +125,7 @@ namespace RegArchLib {
 			throw cError("Size of 'theVectParam' must be > 0") ;
 	}
 
+<<<<<<< HEAD
 	/*!
 	 * \param int theDate: date of the computation
 	 * \param cRegArchValue& theData: past datas.
@@ -149,6 +161,11 @@ namespace RegArchLib {
 		if (1 + theIndex > theSrcVect.GetSize())
 			throw cError("Wrong size") ;
 		mvConst = theSrcVect[theIndex] ;
+=======
+	uint cConst::GetNParam(void) const
+	{
+		// complete
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	}
 
 	void cConst::copy(const cConst& theConst)

@@ -44,11 +44,15 @@ namespace RegArchLib {
 	 */
 	cAbstCondMean* cMa::PtrCopy() const
 	{
+<<<<<<< HEAD
 		 cMa *mycMa = new cMa();
 
 		 mycMa->copy(*this);
 
 		 return mycMa;
+=======
+		// complete
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	}
 
 	/*!
@@ -129,6 +133,7 @@ namespace RegArchLib {
 		mvMa = theVectParam ;
 	}
 
+<<<<<<< HEAD
 	/*!
 	 * \fn cMa::ComputeMean(uint theDate, const cRegArchValue& theData) const
 	 * \param int theDate: date of the computation
@@ -140,6 +145,8 @@ namespace RegArchLib {
 		// A completer
 	}
 
+=======
+>>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	uint cMa::GetNParam(void) const
 	{
 		return mvMa.GetSize() ;
