@@ -38,6 +38,19 @@ namespace RegArchLib {
 	}
 
 	/*!
+	 * \fn cAbstCondVar* cArch::PtrCopy()
+	 */
+
+	cAbstCondVar* cArch::PtrCopy() const
+	{
+		 cArch *mycArch = new cArch();
+
+		 mycArch->copy(*this);
+
+		 return mycArch;
+	}
+
+	/*!
 	 * \fn void cArch::Print(ostream& theOut) const
 	 * \param ostream& theOut: output stream (file or screen). Default cout.
 	 */
@@ -45,18 +58,8 @@ namespace RegArchLib {
 	{
 	uint myNArch = mvArch.GetSize() ;
 		theOut << "ARCH(" << myNArch << ") model with:" << endl ;
-		theOut << "\tCste=" << mvConst << endl ;
 		for (register uint i = 0 ; i < mvArch.GetSize() ; i++)
 			theOut << "\tARCH[" << i+1 << "]=" << mvArch[i] << endl ;
-	}
-
-	void cArch::SetDefaultInitPoint(double theMean, double theVar)
-	{
-		mvConst = theVar*0.1 ;
-	uint myNArch = mvArch.GetSize() ;
-	uint i ;
-		for (i = 0 ; i < myNArch ; i++)
-			mvArch[i] = 0.9/(double)myNArch ;
 	}
 
 	/*!
@@ -79,12 +82,6 @@ namespace RegArchLib {
 	void cArch::ReAlloc(const cDVector& theVectParam, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0: // mvConst
-				if (theVectParam.GetSize() > 0)
-					mvConst = theVectParam[0] ;
-				else
-					throw cError("cArch::ReAlloc - Size of theVectParam must be > 0") ;
-			break ;
-			case 1 : // mvArch
 				mvArch = theVectParam ;
 			break ;
 			default :
@@ -104,9 +101,6 @@ namespace RegArchLib {
 	void cArch::Set(double theValue, uint theIndex, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
-				mvConst = theValue ;
-			break ;
-			case 1 :
 				if (theIndex < mvArch.GetSize())
 					mvArch[theIndex] = theValue ;
 				else
@@ -118,16 +112,15 @@ namespace RegArchLib {
 		}
 	}
 
-	double  cArch::Get(uint theIndex, uint theNumParam)
+	double cArch::Get(uint theIndex, uint theNumParam)
 	{
+		double res = 0.0;
 		switch (theNumParam)
 		{	case 0 :
-				return mvConst ;
-			break ;
-			case 1 :
-				return mvArch[theIndex] ;
+				res = mvArch[theIndex] ;
 			break ;
 		}
+		return res;
 	}
 
 
@@ -141,12 +134,6 @@ namespace RegArchLib {
 	void cArch::Set(const cDVector& theVectParam, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
-				if (theVectParam.GetSize() > 0)
-					mvConst = theVectParam[0] ;
-				else
-					throw cError("cArch::Set - Size of theVectParam must be > 0") ;
-			break ;
-			case 1 :
 				mvArch = theVectParam ;
 			break ;
 			default:
@@ -158,31 +145,49 @@ namespace RegArchLib {
 
 
 	/*!
-	 * \fn cAbstCondVar& cArch::operator =(cAbstCondVar& theSrc)
-	 * \param cAbstCondVar& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cArch class parameter
-	 */
-	cAbstCondVar& cArch::operator =(cAbstCondVar& theSrc)
+	 * \fn double cArch::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of computation
+	 * \param const cRegArchValue& theData: past datas
+	 * \details theData is not updated here.
+	*/
+	double cArch::ComputeVar(uint theDate, const cRegArchValue& theDatas) const
 	{
-	cArch* myArch = dynamic_cast<cArch *>(&theSrc) ;
-		if (myArch)
-		{	
-			copy(*myArch) ;
-			mvConst = myArch->mvConst ;
-		}
-		else
-			throw cError("wrong conditional variance class") ;
-		return *this ;
+            // A completer
 	}
 
 	uint cArch::GetNParam(void) const
 	{
-		// complete
+		return mvArch.GetSize() ;
+	}
+
+	uint cArch::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cArch::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
+	{
+		// A completer	
+	}
+
+	void cArch::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+		uint mySize = GetNParam() ;
+		if (theDestVect.GetSize() < mySize + theIndex)
+			throw cError("Wrong size") ;
+		mvArch.SetSubVectorWithThis(theDestVect, theIndex) ;
+	}
+
+	void cArch::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+		uint mySize = theSrcVect.GetSize() ;
+		if (GetNParam() + theIndex > mySize)
+			throw cError("Wrong size") ;
+		mvArch.SetThisWithSubVector(theSrcVect, theIndex) ;
 	}
 
 	void cArch::copy(const cArch& theArch)
 	{
-		mvConst = theArch.mvConst ;
 		mvArch = theArch.mvArch;
 	}
 	

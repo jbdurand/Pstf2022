@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -48,15 +48,29 @@
           <incDir>
             <pElem>../Error/Headers</pElem>
             <pElem>../VectorAndMatrix/Headers</pElem>
+            <pElem>../RegArchLib/Headers</pElem>
             <pElem>Headers</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
+            <pElem>../RegArchLib/dist/Debug/GNU-Linux</pElem>
             <pElem>../VectorAndMatrix/build/Debug/GNU-Linux-x86</pElem>
             <pElem>../Error/build/Debug/GNU-Linux-x86</pElem>
           </linkerAddLib>
           <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../RegArchLib"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../RegArchLib"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libRegArchLib.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
             <linkerLibProjectItem>
               <makeArtifact PL="../VectorAndMatrix"
                             CT="2"

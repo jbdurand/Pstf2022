@@ -20,9 +20,17 @@ namespace RegArchLib {
 		mResids = NULL ;
 	}
 
-	cRegArchModel::cRegArchModel(theMean, theVar, theResiduals)
-	{	
-		// complete
+	/*!
+	 * \fn cRegArchModel::cRegArchModel(cCondMean* theMean, cAbstCondVar* theVar, cAbstResiduals* theResiduals)
+	 * \param cCondMean* theMean: pointer to conditional mean model
+	 * \param cAbstCondVar* theVar: pointer to conditional variance model
+	 * \param cAbstResiduals* theResiduals: pointer to conditional residuals distribution model
+	 * \details A simple constructor
+	 */
+	cRegArchModel::cRegArchModel(cCondMean& theMean, cCondVar& theVar, cAbstResiduals& theResiduals)
+	{	mMean = new cCondMean(theMean) ;			
+		mVar = new cCondVar(theVar) ;
+		mResids = theResiduals.PtrCopy() ;
 		
  		MESS_CREAT("cRegArchModel") ;
 	}
@@ -33,8 +41,12 @@ namespace RegArchLib {
 	 * \details recopy constructor
 	 */
 		cRegArchModel::cRegArchModel(cRegArchModel& theModel)
-		{	
-			// complete
+		{	if (theModel.mMean != NULL)
+				mMean = new cCondMean(*theModel.mMean) ;
+			else
+				mMean = new cCondMean() ;
+			mVar = new cCondVar(*theModel.mVar) ;
+			mResids = theModel.mResids->PtrCopy() ;
 
  			MESS_CREAT("cRegArchModel") ;
 		}
@@ -66,9 +78,21 @@ namespace RegArchLib {
 	cRegArchModel& cRegArchModel::operator=(cRegArchModel& theRegArchModel)
 	{
 		*mMean =  *(theRegArchModel.mMean) ;
-		*mVar = *(theRegArchModel.mVar) ;
-		*mResids = *(theRegArchModel.mResids) ;
+		*mVar =  *(theRegArchModel.mVar) ;
+		mResids = theRegArchModel.mResids->PtrCopy() ;
 		return *this ;
+	}
+	/*!
+	 * \fn void cRegArchModel::GetNMean(void)
+	 * \param void
+	 * \details return the number of mean components
+	 */
+	int cRegArchModel::GetNMean(void)
+	{
+		if (mMean == NULL)
+			return 0 ;
+		else
+			return mMean->GetNMean() ;
 	}
 
 	void cRegArchModel::ReAllocMean(uint theNewSize)
@@ -97,19 +121,6 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cRegArchModel::GetNMean(void)
-	 * \param void
-	 * \details return the number of mean components
-	 */
-	int cRegArchModel::GetNMean(void)
-	{
-		if (mMean == NULL)
-			return 0 ;
-		else
-			return mMean->GetNMean() ;
-	}
-
-	/*!
 	 * \fn void cRegArchModel::AddOneMean(cAbstCondMean& theOneMean)
 	 * \param cAbstCondMean& theOneMean: the conditional mean component model
 	 * \details Add a new mean component
@@ -125,10 +136,17 @@ namespace RegArchLib {
 			myWhere = (int)mMean->GetNMean() ;
 		mMean->SetOneMean(myWhere, theOneMean) ;
 	}
-	
-	cRegArchModel::GetOneMean(int theNumMean)
-	{	
-		// complete
+
+	/*!
+	 * \fn cAbstCondMean* cRegArchModel::GetOneMean(int theNumMean)
+	 * \param int theNumMean: the index of the mean component
+	 * \details Return theNumMean th mean component
+	 */
+	cAbstCondMean* cRegArchModel::GetOneMean(int theNumMean)
+	{	if (mMean != NULL)
+			return mMean->GetOneMean(theNumMean) ;
+		else
+			return NULL ;
 	}
 
 	bool cRegArchModel::IsGoodMeanType(eCondMeanEnum theMeanEnum, int theIndex)
@@ -141,7 +159,6 @@ namespace RegArchLib {
 			return false ;
 	}
 
-
 	/*!
 	 * \fn void cRegArchModel::PrintMean(ostream& theOut) const
 	 * \param ostream& theOut: output stream (screen or file). Default: cout
@@ -151,33 +168,111 @@ namespace RegArchLib {
     		mMean->Print(theOut) ;
     }
 
-	void cRegArchModel::SetVar(theCondVar)
+	/*!
+	 * \fn int cRegArchModel::GetNVar(void)
+	 * \param void
+	 * \details return the number of variance components
+	 */
+	int cRegArchModel::GetNVar(void)
 	{
-		// complete
+		if (mVar == NULL)
+			return 0 ;
+		else
+			return mVar->GetNVar() ;
 	}
 
-	cRegArchModel::GetVar(void)
+	void cRegArchModel::ReAllocVar(uint theNewSize)
 	{
-		// complete
+		if (mVar != NULL)
+		{
+			mVar->Delete() ;
+			delete mVar ;
+		}
+		mVar = new cCondVar(theNewSize) ;
 	}
+
+	/*!
+	 * \fn void cRegArchModel::SetVar(cCondVar& theCondVar)
+	 * \param cCondVar& cCondVar: the conditional variance model
+	 */
+	void cRegArchModel::SetVar(cCondVar& theCondVar)
+	{
+		if (mVar != NULL)
+		{
+			mVar->Delete() ;
+			delete mVar ;
+		}
+
+		mVar = new cCondVar(theCondVar) ;
+	}
+
+	/*!
+	 * \fn void cRegArchModel::AddOneVar(cAbstCondVar& theOneVar)
+	 * \param cAbstCondVar& theOneVar: the conditional variance component model
+	 * \details Add a new variance component
+	 */
+	void cRegArchModel::AddOneVar(cAbstCondVar& theOneVar)
+	{
+		int myWhere ;
+		if (mVar == NULL)
+		{	myWhere = 0 ;
+			mVar = new cCondVar(1) ;
+		}
+		else
+			myWhere = (int)mVar->GetNVar() ;
+		mVar->SetOneVar(myWhere, theOneVar) ;
+	}
+
+	/*!
+	 * \fn void cRegArchModel::GetOneVar(int theNumVar)
+	 * \param int theNumVar: the index of the variance component
+	 * \details Return theNumVar th variance component
+	 */
+	cAbstCondVar* cRegArchModel::GetOneVar(int theNumVar)
+	{	if (mVar != NULL)
+			return mVar->GetOneVar(theNumVar) ;
+		else
+			return NULL ;
+	}
+
+	bool cRegArchModel::IsGoodVarType(eCondVarEnum theVarEnum, int theIndex)
+	{
+		if (mVar != NULL)
+		{	cAbstCondVar* myCondVar = mVar->GetOneVar(theIndex) ;
+			return (myCondVar->GetCondVarType() == theVarEnum) ;
+		}
+		else
+			return false ;
+	}
+
 
 	/*!
 	 * \fn void cRegArchModel::PrintVar(ostream& theOut) const
 	 * \param ostream& theOut: output stream (screen or file). Default: cout
 	 */
 	void cRegArchModel::PrintVar(ostream& theOut) const
-{	if (mVar != NULL)
-		mVar->Print(theOut);
-}
+    {	
+		if (mVar != NULL)
+    		mVar->Print(theOut);
+    }
 
-	void cRegArchModel::SetResid(theCondResiduals)
+	/*!
+	 * \fn void cRegArchModel::SetResid(cAbstResiduals& theCondResiduals)
+	 * \param cAbstResiduals& theCondResiduals: the conditional residuals model
+	 */
+	void cRegArchModel::SetResid(cAbstResiduals& theCondResiduals)
 	{
-		// complete
+		if (mResids != NULL)
+		{
+			mResids->Delete() ;
+			delete mResids ;
+		}
+		mResids = theCondResiduals.PtrCopy() ;
 	}
 
-	 cRegArchModel::GetResid(void)
+	cAbstResiduals*  cRegArchModel::GetResid(void)
 	{
-		// complete
+			return mResids ;
 	}
 
 	/*!
@@ -201,8 +296,6 @@ namespace RegArchLib {
     	theOut << endl ;
     	PrintMean(theOut) ;
     	theOut << endl ;
-    	theOut << "Conditional variance parameters:" << endl ;
-    	theOut << "--------------------------------" << endl ;
     	PrintVar(theOut) ;
     	theOut << endl ;
     
@@ -216,6 +309,44 @@ namespace RegArchLib {
     		return mVar->GetNParam() + mResids->GetNParam() ;
     }
 
+	uint cRegArchModel::GetNLags(void) const
+    {
+    	if (mMean == NULL)
+    		return mVar->GetNLags() ;
+    	else
+    		return MAX(mMean->GetNLags(), mVar->GetNLags()) ;
+    }
+
+	void cRegArchModel::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData)
+    {
+		// Pas forcement utile pour le moment
+    }
+
+	void cRegArchModel::RegArchParamToVector(cDVector& theDestVect) const
+    {
+    uint myIndex = 0 ;
+    	if (mMean != NULL)
+    	{	mMean->RegArchParamToVector(theDestVect, myIndex) ;
+    		myIndex += mMean->GetNParam() ;
+    	}
+    	mVar->RegArchParamToVector(theDestVect, myIndex) ;
+     	myIndex += mVar->GetNParam() ;
+    	mResids->RegArchParamToVector(theDestVect, myIndex) ;
+    }
+
+	void cRegArchModel::VectorToRegArchParam(const cDVector& theSrcParam)
+    {
+    uint myIndex = 0 ;
+    	if (mMean != NULL)
+    	{	mMean->VectorToRegArchParam(theSrcParam, myIndex) ;
+    		myIndex += mMean->GetNParam() ;
+    	}
+    	mVar->VectorToRegArchParam(theSrcParam, myIndex) ;
+    	myIndex += mVar->GetNParam() ;
+    	mResids->VectorToRegArchParam(theSrcParam, myIndex) ;
+    
+    
+    }
 
 }//namespace
 

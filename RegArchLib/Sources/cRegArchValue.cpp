@@ -201,4 +201,13 @@ namespace RegArchLib {
 
 	}
 
+	void cRegArchValue::ComputeMeanAndVar(double& theMean, double& theVar)
+	{
+		theMean = theVar = 0.0 ;
+		for (register uint i = 0 ; i < mYt.GetSize() ; i++)
+		{	theMean = ((double)i*theMean + mYt[i])/(double)(i+1) ;
+			theVar = ((double)i*theVar + mYt[i]*mYt[i])/(double)(i+1) ;
+		}
+		theVar -= theMean * theMean ;
+	}
 } // cRegArchValue

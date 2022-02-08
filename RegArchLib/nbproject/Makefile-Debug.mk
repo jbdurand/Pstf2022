@@ -43,21 +43,24 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sources/cAr.o \
 	${OBJECTDIR}/Sources/cArch.o \
 	${OBJECTDIR}/Sources/cCondMean.o \
+	${OBJECTDIR}/Sources/cCondVar.o \
 	${OBJECTDIR}/Sources/cConst.o \
 	${OBJECTDIR}/Sources/cConstCondVar.o \
 	${OBJECTDIR}/Sources/cGarch.o \
 	${OBJECTDIR}/Sources/cMa.o \
 	${OBJECTDIR}/Sources/cNormResiduals.o \
+	${OBJECTDIR}/Sources/cRegArchGradient.o \
 	${OBJECTDIR}/Sources/cRegArchModel.o \
-	${OBJECTDIR}/Sources/cRegArchValue.o
+	${OBJECTDIR}/Sources/cRegArchValue.o \
+	${OBJECTDIR}/Sources/cStudentResiduals.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=
-CXXFLAGS=
+CCFLAGS=-D_DEBUG
+CXXFLAGS=-D_DEBUG
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -79,82 +82,95 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libRegArchLib.${CND_DLIB_EXT}: ${OBJE
 ${OBJECTDIR}/Sources/RegArchCompute.o: Sources/RegArchCompute.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/RegArchCompute.o Sources/RegArchCompute.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/RegArchCompute.o Sources/RegArchCompute.cpp
 
 ${OBJECTDIR}/Sources/StdAfxRegArchLib.o: Sources/StdAfxRegArchLib.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/StdAfxRegArchLib.o Sources/StdAfxRegArchLib.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/StdAfxRegArchLib.o Sources/StdAfxRegArchLib.cpp
 
 ${OBJECTDIR}/Sources/cAbstCondMean.o: Sources/cAbstCondMean.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstCondMean.o Sources/cAbstCondMean.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstCondMean.o Sources/cAbstCondMean.cpp
 
 ${OBJECTDIR}/Sources/cAbstCondVar.o: Sources/cAbstCondVar.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstCondVar.o Sources/cAbstCondVar.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstCondVar.o Sources/cAbstCondVar.cpp
 
 ${OBJECTDIR}/Sources/cAbstResiduals.o: Sources/cAbstResiduals.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstResiduals.o Sources/cAbstResiduals.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAbstResiduals.o Sources/cAbstResiduals.cpp
 
 ${OBJECTDIR}/Sources/cAr.o: Sources/cAr.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAr.o Sources/cAr.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cAr.o Sources/cAr.cpp
 
 ${OBJECTDIR}/Sources/cArch.o: Sources/cArch.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cArch.o Sources/cArch.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cArch.o Sources/cArch.cpp
 
 ${OBJECTDIR}/Sources/cCondMean.o: Sources/cCondMean.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cCondMean.o Sources/cCondMean.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cCondMean.o Sources/cCondMean.cpp
+
+${OBJECTDIR}/Sources/cCondVar.o: Sources/cCondVar.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cCondVar.o Sources/cCondVar.cpp
 
 ${OBJECTDIR}/Sources/cConst.o: Sources/cConst.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cConst.o Sources/cConst.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cConst.o Sources/cConst.cpp
 
 ${OBJECTDIR}/Sources/cConstCondVar.o: Sources/cConstCondVar.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cConstCondVar.o Sources/cConstCondVar.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cConstCondVar.o Sources/cConstCondVar.cpp
 
 ${OBJECTDIR}/Sources/cGarch.o: Sources/cGarch.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cGarch.o Sources/cGarch.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cGarch.o Sources/cGarch.cpp
 
 ${OBJECTDIR}/Sources/cMa.o: Sources/cMa.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cMa.o Sources/cMa.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cMa.o Sources/cMa.cpp
 
 ${OBJECTDIR}/Sources/cNormResiduals.o: Sources/cNormResiduals.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cNormResiduals.o Sources/cNormResiduals.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cNormResiduals.o Sources/cNormResiduals.cpp
+
+${OBJECTDIR}/Sources/cRegArchGradient.o: Sources/cRegArchGradient.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchGradient.o Sources/cRegArchGradient.cpp
 
 ${OBJECTDIR}/Sources/cRegArchModel.o: Sources/cRegArchModel.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchModel.o Sources/cRegArchModel.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchModel.o Sources/cRegArchModel.cpp
 
 ${OBJECTDIR}/Sources/cRegArchValue.o: Sources/cRegArchValue.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../Error/Headers -I../VectorAndMatrix/Headers -IHeaders -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchValue.o Sources/cRegArchValue.cpp
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchValue.o Sources/cRegArchValue.cpp
+
+${OBJECTDIR}/Sources/cStudentResiduals.o: Sources/cStudentResiduals.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -IHeaders -I../Error/Headers -I../VectorAndMatrix/Headers -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cStudentResiduals.o Sources/cStudentResiduals.cpp
 
 # Subprojects
 .build-subprojects:
-	cd ../Error && ${MAKE}  -f Makefile CONF=Debug
-	cd ../VectorAndMatrix && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -162,8 +178,6 @@ ${OBJECTDIR}/Sources/cRegArchValue.o: Sources/cRegArchValue.cpp
 
 # Subprojects
 .clean-subprojects:
-	cd ../Error && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../VectorAndMatrix && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

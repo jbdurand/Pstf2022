@@ -31,6 +31,19 @@ namespace RegArchLib {
 	}
 
 	/*!
+	 * \fn cAbstCondVar* cConstCondVar::PtrCopy()
+	 */
+
+	cAbstCondVar* cConstCondVar::PtrCopy() const
+	{
+		 cConstCondVar *myConstCondVar = new cConstCondVar();
+
+		 myConstCondVar->copy(*this);
+
+		 return myConstCondVar;
+	}
+
+	/*!
 	 * \fn void cConstCondVar::Delete(void)
 	 * \param void
 	 * \details Nothing to do here.
@@ -107,25 +120,43 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn cAbstCondVar& cConstCondVar::operator =(cAbstCondVar& theSrc)
-	 * \param cAbstCondVar& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cConstCondVar class parameter
+	 * \fn double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of the computation
+	 * \param cRegArchValue& theData: past datas.
+	 * \details theData must not be updated here.
 	 */
-	cAbstCondVar& cConstCondVar::operator =(cAbstCondVar& theSrc)
+	double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
 	{
-	cConstCondVar* myConstCondVar = dynamic_cast<cConstCondVar *>(&theSrc) ;
-		if (myConstCondVar)
-		{	
-			copy(*myConstCondVar) ;
-		}
-		else
-			throw cError("wrong conditional variance class") ;
-		return *this ;
+		// A completer
 	}
 
 	uint cConstCondVar::GetNParam(void) const
 	{
-		// complete
+		return 1 ;
+	}
+	uint cConstCondVar::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cConstCondVar::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
+	{
+		// A completer
+	}
+
+	void cConstCondVar::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+	uint mySize = theDestVect.GetSize() ;
+		if (theIndex >= mySize)
+			throw cError("Wrong size") ;
+		theDestVect[theIndex] = mvCste;
+	}
+
+	void cConstCondVar::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+		if (1 + theIndex > theSrcVect.GetSize())
+			throw cError("Wrong size") ;
+		mvCste = theSrcVect[theIndex] ;
 	}
 
 	void cConstCondVar::copy(const cConstCondVar& theConstCondVar)
