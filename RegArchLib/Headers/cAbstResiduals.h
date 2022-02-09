@@ -14,6 +14,7 @@
 #include <ctime>
 #include <cmath>
 #include "cRegArchValue.h"
+#include "cRegArchGradient.h"
 
 namespace RegArchLib {
 
@@ -41,10 +42,15 @@ namespace RegArchLib {
 		void Set(double theValue, uint theIndex=0) ;
 		virtual void Print(ostream& theOut=cout) const=0 ; ///< Print the distribution type
 		friend ostream& operator <<(ostream& theOut, const cAbstResiduals& theAbstResisuals) ; ///< Print the distribution type
-		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution
+		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution 
 		virtual double LogDensity(double theX) const=0 ; ///< log density function
 		/** Return the number of parameters in distribution */
 		virtual uint GetNParam(void) const = 0 ;
+		/** Compute the derivative of log density with respect to the random variable (theGradData[0]) \e and the gradient
+            of log density with respect to the model parameters (other components in theGradData) */
+		virtual void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData) const = 0 ;
+		virtual void RegArchParamToVector(cDVector& theDestVect, uint theIndex) const = 0 ;
+		virtual void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) = 0 ;
 	} ;
 
 }

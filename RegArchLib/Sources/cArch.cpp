@@ -38,6 +38,19 @@ namespace RegArchLib {
 	}
 
 	/*!
+	 * \fn cAbstCondVar* cArch::PtrCopy()
+	 */
+
+	cAbstCondVar* cArch::PtrCopy() const
+	{
+		 cArch *mycArch = new cArch();
+
+		 mycArch->copy(*this);
+
+		 return mycArch;
+	}
+
+	/*!
 	 * \fn void cArch::Print(ostream& theOut) const
 	 * \param ostream& theOut: output stream (file or screen). Default cout.
 	 */
@@ -132,26 +145,45 @@ namespace RegArchLib {
 
 
 	/*!
-	 * \fn cAbstCondVar& cArch::operator =(cAbstCondVar& theSrc)
-	 * \param cAbstCondVar& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cArch class parameter
-	 */
-	cAbstCondVar& cArch::operator =(cAbstCondVar& theSrc)
+	 * \fn double cArch::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of computation
+	 * \param const cRegArchValue& theData: past datas
+	 * \details theData is not updated here.
+	*/
+	double cArch::ComputeVar(uint theDate, const cRegArchValue& theDatas) const
 	{
-	cArch* myArch = dynamic_cast<cArch *>(&theSrc) ;
-		if (myArch)
-		{	
-			copy(*myArch) ;
-			mvConst = myArch->mvConst ;
-		}
-		else
-			throw cError("wrong conditional variance class") ;
-		return *this ;
-	}
+            // A completer
+    	}
 
 	uint cArch::GetNParam(void) const
 	{
-		// complete
+		return mvArch.GetSize() ;
+	}
+
+	uint cArch::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cArch::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
+	{
+		// A completer	
+	}
+
+	void cArch::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+		uint mySize = GetNParam() ;
+		if (theDestVect.GetSize() < mySize + theIndex)
+			throw cError("Wrong size") ;
+		mvArch.SetSubVectorWithThis(theDestVect, theIndex) ;
+	}
+
+	void cArch::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+		uint mySize = theSrcVect.GetSize() ;
+		if (GetNParam() + theIndex > mySize)
+			throw cError("Wrong size") ;
+		mvArch.SetThisWithSubVector(theSrcVect, theIndex) ;
 	}
 
 	void cArch::copy(const cArch& theArch)

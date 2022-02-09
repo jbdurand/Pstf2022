@@ -44,7 +44,11 @@ namespace RegArchLib {
 	 */
 	cAbstCondMean* cAr::PtrCopy() const
 	{
-		// complete
+		 cAr *mycAr = new cAr();
+
+		 mycAr->copy(*this);
+
+		 return mycAr;
 	}
 
 
@@ -125,27 +129,47 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn cAbstCondMean& cAr::operator =(cAbstCondMean& theSrc)
-	 * \param cAbstCondMean& theSrc: source to be recopied
-	 * \details An error occurs if theSrc is not an cAr class parameter 
+	 * \fn double cAr::ComputeMean(uint theDate, const cRegArchValue& theData) const
+	 * \brief Compute conditional mean component for an AR model
+	 * \param int theDate: date of the computation
+	 * \param const cRegArchValue& theData: past datas.
+	 * \details theData is not updated here.
 	 */
-	cAbstCondMean& cAr::operator =(cAbstCondMean& theSrc)
+	double cAr::ComputeMean(uint theDate, const cRegArchValue& theData) const
 	{
-		cAr* myAr = dynamic_cast<cAr *>(&theSrc) ;
-		
-		if (myAr)
-		{	
-			copy(*myAr) ;
-			SetCondMeanType(eAr) ;
-		}
-		else
-			throw cError("wrong conditional mean class") ;
-		return *this ;
+            // A completer
 	}
 
 	uint cAr::GetNParam(void) const
 	{
-		// Complete
+		return mvAr.GetSize() ;
+	}
+
+	uint cAr::GetNLags(void) const
+	{
+		// A completer
+	}
+
+
+	void cAr::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData,  uint theBegIndex, cAbstResiduals* theResids)
+	{
+		// A completer
+	}
+
+	void cAr::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+	uint mySize = mvAr.GetSize() ;
+		if (theDestVect.GetSize() < mySize + theIndex)
+			throw cError("Wrong size") ;
+		mvAr.SetSubVectorWithThis(theDestVect, theIndex) ;
+	}
+
+	void cAr::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+	uint mySize = theSrcVect.GetSize() ;
+		if (mvAr.GetSize() + theIndex > mySize)
+			throw cError("Wrong size") ;
+		mvAr.SetThisWithSubVector(theSrcVect, theIndex) ;
 	}
 
 	void cAr::copy(const cAr& theAr)

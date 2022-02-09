@@ -26,8 +26,12 @@ namespace RegArchLib {
 	 * \details Recopy constructor
 	 */
 	cCondMean::cCondMean(const cCondMean& theCondMean)
+	: mvNCondMean(theCondMean.GetNMean()),
+	  mvCondMean(theCondMean.GetNMean())
 	{
-		// A completer		
+		std::vector<cAbstCondMean*> myCondMean = theCondMean.GetCondMean() ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+			mvCondMean[i] = myCondMean[i]->PtrCopy() ;
 		MESS_CREAT("cCondMean") ;
 	}
 
@@ -47,8 +51,25 @@ namespace RegArchLib {
 	 * \details free memory used par the cCondMean class
 	 */
 	void cCondMean::Delete(void)
+	{	if (mvNCondMean > 0)
+		{	for (register uint i = 0 ; i < mvNCondMean ; i++)
+				if (mvCondMean[i] != NULL)
+				{	mvCondMean[i]->Delete() ;
+					delete mvCondMean[i] ;
+					mvCondMean[i] = (cAbstCondMean *)NULL ;
+				}
+		}
+		mvNCondMean = 0 ;
+	}
+
+	/*!
+	 * \fn inline uint cCondMean::GetNMean(void) const
+	 * \param void
+	 * \brief return mvNCondMean
+	 */
+	uint cCondMean::GetNMean(void) const
 	{
-		// complete
+		return mvNCondMean ;
 	}
 
 	/*!
@@ -142,6 +163,69 @@ namespace RegArchLib {
 			theOut << endl ;
 		}
 		return theOut ;
+	}
+
+	/*!
+	 * \fn cCondMean& cCondMean::operator =(cCondMean& theSrc)
+	 * \param cCondMean& theSrc: source class
+	 */
+	cCondMean& cCondMean::operator =(cCondMean& theSrc)
+	{	Delete() ;
+	
+		mvNCondMean = theSrc.GetNMean() ;
+		mvCondMean.resize(mvNCondMean) ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+			mvCondMean[i] = theSrc.GetOneMean(i)->PtrCopy() ;
+		return *this ;
+	}
+
+	/*!
+	 * \fn double cCondMean::ComputeMean(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of computation
+	 * \param const cRegArchValue& theData: past datas.
+	 * \details Compute the value of the conditional mean at date theDate. 
+	 * theData is not updated here.
+	 */
+	double cCondMean::ComputeMean(uint theDate, const cRegArchValue& theData) const
+	{
+            // A completer
+	}
+
+	uint cCondMean::GetNParam(void) const
+	{
+	uint myNParam = 0 ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+			myNParam += mvCondMean[i]->GetNParam() ;
+		return myNParam ;
+	}
+
+	uint cCondMean::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cCondMean::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData, cAbstResiduals* theResids)
+	{
+		// A completer
+	}
+
+
+	void cCondMean::RegArchParamToVector(cDVector& theDestVect, uint theIndex) const
+	{
+	uint myIndexCour = theIndex ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+		{	mvCondMean[i]->RegArchParamToVector(theDestVect, myIndexCour) ;
+			myIndexCour += mvCondMean[i]->GetNParam() ;
+		}
+	}
+
+	void cCondMean::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+	uint myIndexCour = theIndex ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+		{	mvCondMean[i]->VectorToRegArchParam(theSrcVect, myIndexCour) ;
+			myIndexCour += mvCondMean[i]->GetNParam() ;
+		}
 	}
 
 }//namespace

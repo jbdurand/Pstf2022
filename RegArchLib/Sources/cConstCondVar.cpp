@@ -31,6 +31,19 @@ namespace RegArchLib {
 	}
 
 	/*!
+	 * \fn cAbstCondVar* cConstCondVar::PtrCopy()
+	 */
+
+	cAbstCondVar* cConstCondVar::PtrCopy() const
+	{
+		 cConstCondVar *myConstCondVar = new cConstCondVar();
+
+		 myConstCondVar->copy(*this);
+
+		 return myConstCondVar;
+	}
+
+	/*!
 	 * \fn void cConstCondVar::Delete(void)
 	 * \param void
 	 * \details Nothing to do here.
@@ -106,9 +119,44 @@ namespace RegArchLib {
 		return mvCste ;
 	}
 
+	/*!
+	 * \fn double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of the computation
+	 * \param cRegArchValue& theData: past datas.
+	 * \details theData must not be updated here.
+	 */
+	double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	{
+            // A completer
+	}
+
 	uint cConstCondVar::GetNParam(void) const
 	{
-		// complete
+		return 1 ;
+	}
+	uint cConstCondVar::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cConstCondVar::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
+	{
+		// A completer
+	}
+
+	void cConstCondVar::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+	uint mySize = theDestVect.GetSize() ;
+		if (theIndex >= mySize)
+			throw cError("Wrong size") ;
+		theDestVect[theIndex] = mvCste;
+	}
+
+	void cConstCondVar::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+		if (1 + theIndex > theSrcVect.GetSize())
+			throw cError("Wrong size") ;
+		mvCste = theSrcVect[theIndex] ;
 	}
 
 	void cConstCondVar::copy(const cConstCondVar& theConstCondVar)

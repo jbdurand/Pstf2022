@@ -10,6 +10,7 @@
 
 namespace RegArchLib {
 
+	/*!
 	 * \fn cAbstCondVar::cAbstCondVar(eCondVarEnum theType)
 	 * \param eCondVarEnum theType: Conditional variance type code. Default eNotKnown.
 	 */

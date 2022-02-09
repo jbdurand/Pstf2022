@@ -4,6 +4,7 @@
 
 #include "cAbstCondMean.h"
 #include "cRegArchValue.h"
+#include "cRegArchGradient.h"
 
 /*!
 	\file cMa.h
@@ -32,7 +33,12 @@ namespace RegArchLib {
 		void Set(double theValue, uint theIndex=0, uint theNumParam=0) ; ///< Set model parameters.
 		void Set(const cDVector& theVectParam, uint theNumParam=0) ; ///< Set model parameters.
 		double Get(uint theIndex=0, uint theNumParam=0) ;
-		uint GetNParam(void) const ;
+		double ComputeMean(uint theDate, const cRegArchValue& theData) const ; /// Compute the conditional mean value
+		uint GetNParam(void) const ; ///< Number of parameters in that model part
+		uint GetNLags(void) const ; ///< Number of past gradients required to compute gradient at current time t.
+		void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals) ;
+		void RegArchParamToVector(cDVector& theDestVect, uint theIndex) ;
+		void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) ;
 	protected :
 		void copy(const cMa& theMa) ; /// < Copy attribute from instance
 	} ;

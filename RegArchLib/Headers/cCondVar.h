@@ -5,6 +5,7 @@
 #include "RegArchDef.h"
 #include "cAbstCondVar.h"
 #include "cRegArchValue.h"
+#include "cRegArchGradient.h"
 #include <vector>
 
 /*!
@@ -26,28 +27,30 @@ namespace RegArchLib {
 	class _DLLEXPORT_ cCondVar
 	{
 	private :
-		/// please complete this section
+		uint			mvNCondVar	;  ///< Number of variance components
+		std::vector<cAbstCondVar*>	mvCondVar ; ///< Vector of the mvNCondVar conditional variance components
 	public :
 		cCondVar(uint theNCondVar = 0) ; ///< A simple constructor
 		cCondVar(const cCondVar& theCondVar) ;
 		virtual ~cCondVar() ; ///< A simple destructor
 		void Delete(void) ; ///< Free memory.
 		uint GetNVar(void) const ; ///< Return the number of variance components.
-		// Complete
-		// GetCondVar(void) const ; ///< Return mvCondVar
+		std::vector<cAbstCondVar*> GetCondVar(void) const ; ///< Return mvCondVar
 		void SetOneVar(uint theWhatVar, eCondVarEnum theCode) ; ///< Set the type of a given variance component.
 		void SetOneVar(uint theWhatVar, cAbstCondVar& theAbstCondVar) ; ///< Set theWhatVar th component of the conditional variance model
-		// Complete
-		// GetOneVar(uint theIndex) const ; ///< Return a pointer to the given variance component  (no object is allocated)
+		cAbstCondVar* GetOneVar(uint theIndex) const ; ///< Return a pointer to the given variance component  (no object is allocated)
 		void Print(ostream& theOut=cout) const ; ///< Print the conditional variance model
 		friend ostream& operator <<(ostream& theOut, const cCondVar& theCondVar) ; ///< Print the conditional variance model
 		void GetCondVarType(eCondVarEnum* theCodeType) const ; ///< Return the type of each variance component
 		cCondVar& operator =(cCondVar& theSrc) ; ///< affectation operator
-		// Complete source		
 		double ComputeVar(uint theDate, const cRegArchValue& theData) const ; ///< Return conditional variance.
 		/** Number of parameters in CondVar */
 		uint GetNParam(void) const ;
 		double Get(uint theNumVar=0, uint theIndex=0, uint theNumParam=0) ;
+		uint GetNLags(void) const  ; ///< (Maximal) number of past gradients required to compute gradient at current time t.
+		void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, cAbstResiduals* theResiduals) ;
+		void RegArchParamToVector(cDVector& theDestVect, uint theIndex) const ;
+		void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) ;
 	} ;
 }
 

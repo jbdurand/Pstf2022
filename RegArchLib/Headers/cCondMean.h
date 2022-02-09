@@ -5,6 +5,8 @@
 #include "RegArchDef.h"
 #include "cAbstCondMean.h"
 #include "cRegArchValue.h"
+#include "cRegArchGradient.h"
+#include <vector>
 
 /*!
 	\file cCondMean.h
@@ -25,26 +27,30 @@ namespace RegArchLib {
 	class _DLLEXPORT_ cCondMean
 	{
 	private :
-		/// please complete this section
+		uint			mvNCondMean	;  ///< Number of mean components
+		std::vector<cAbstCondMean*>	mvCondMean ; ///< Vector of the mvNCondMean conditional mean components
 	public :
 		cCondMean(uint theNCondMean = 0) ; ///< A simple constructor
 		cCondMean(const cCondMean& theCondMean) ;
 		virtual ~cCondMean() ; ///< A simple destructor
 		void Delete(void) ; ///< Free memory.
 		uint GetNMean(void) const ; ///< Return the number of mean components.
-		// Complete
-		// GetCondMean(void) const ; ///< Return mvCondMean
+		std::vector<cAbstCondMean*> GetCondMean(void) const ; ///< Return mvCondMean
 		void SetOneMean(uint theWhatMean, eCondMeanEnum theCode) ; ///< Set the type of a given mean component. 
 		void SetOneMean(uint theWhatMean, cAbstCondMean& theAbstCondMean) ; ///< Set theWhatMean th component of the conditional mean model
-		// Complete
-		// GetOneMean(uint theIndex) const ; ///< Return a pointer to the given mean component  (no object is allocated)
+		cAbstCondMean* GetOneMean(uint theIndex) const ; ///< Return a pointer to the given mean component  (no object is allocated)
 		void Print(ostream& theOut=cout) const ; ///< Print the conditional mean model
 		friend ostream& operator <<(ostream& theOut, const cCondMean& theCondMean) ; ///< Print the conditional mean model
 		void GetCondMeanType(eCondMeanEnum* theCodeType) const ; ///< Return the type of each mean component	
 		cCondMean& operator =(cCondMean& theSrc) ; ///< affectation operator
-		// double ComputeMean() // Complete
+		double ComputeMean(uint theDate, const cRegArchValue& theData) const ; ///< Return conditional mean.
 		/** Number of parameters in CondMean */
 		uint GetNParam(void) const ;
+		double Get(uint theNumMean=0, uint theIndex=0, uint theNumParam=0) ;
+		uint GetNLags(void) const  ; ///< (Maximal) number of past gradients required to compute gradient at current time t.
+		void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, cAbstResiduals* theResiduals) ;
+		void RegArchParamToVector(cDVector& theDestVect, uint theIndex) const ;
+		void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) ;
 	} ;
 }
 

@@ -4,8 +4,7 @@
 
 #include "cRegArchModel.h"
 #include "cRegArchValue.h"
-namespace RegArchLib {
-// using namespace RegArchLib;
+#include "cRegArchGradient.h"
 
 /*!
  \file RegArchCompute.h
@@ -14,10 +13,15 @@ namespace RegArchLib {
  \author Jean-Baptiste DURAND, Ollivier TARAMASCO
  \date dec-18-2006 - Last change feb-18-2011
 */
-/* namespace RegArchLib {
-// please complete function profile
-	extern _DLLEXPORT_ void RegArchSimul() ; ///< Simulation of a general RegArch Model
-	///< Add some function RegArchLLH to compute log-likelihood
-}*/
+namespace RegArchLib {
+
+extern _DLLEXPORT_ void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cRegArchValue& theData) ; ///< Simulation of a general RegArch Model
+extern _DLLEXPORT_ double RegArchLLH(const cRegArchModel& theParam, cDVector* theYt, cDMatrix* theXt=NULL) ; ///< Log-Likelihood of a general RegArch Model
+extern _DLLEXPORT_ double RegArchLLH(const cRegArchModel& theParam, cRegArchValue& theData) ; ///< Log-Likelihood of a general RegArch Model
+extern _DLLEXPORT_ void RegArchGradLt(uint theDate, cRegArchModel& theParam, cRegArchValue& theData, cRegArchGradient& theGradData, cDVector& theGradlt) ;
+extern _DLLEXPORT_ void RegArchGradLLH(cRegArchModel& theParam, cRegArchValue& theData, cDVector& theGradLLH) ;
+extern _DLLEXPORT_ void NumericRegArchGradLLH(cRegArchModel& theModel, cRegArchValue& theValue, cDVector& theGradLLH, double theh = 1e-3) ;
+
+}
 
 #endif //_REGARCHCOMPUTE_H_

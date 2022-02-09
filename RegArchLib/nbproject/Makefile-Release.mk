@@ -43,13 +43,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sources/cAr.o \
 	${OBJECTDIR}/Sources/cArch.o \
 	${OBJECTDIR}/Sources/cCondMean.o \
+	${OBJECTDIR}/Sources/cCondVar.o \
 	${OBJECTDIR}/Sources/cConst.o \
 	${OBJECTDIR}/Sources/cConstCondVar.o \
 	${OBJECTDIR}/Sources/cGarch.o \
 	${OBJECTDIR}/Sources/cMa.o \
 	${OBJECTDIR}/Sources/cNormResiduals.o \
+	${OBJECTDIR}/Sources/cRegArchGradient.o \
 	${OBJECTDIR}/Sources/cRegArchModel.o \
-	${OBJECTDIR}/Sources/cRegArchValue.o
+	${OBJECTDIR}/Sources/cRegArchValue.o \
+	${OBJECTDIR}/Sources/cStudentResiduals.o
 
 
 # C Compiler Flags
@@ -116,6 +119,11 @@ ${OBJECTDIR}/Sources/cCondMean.o: Sources/cCondMean.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cCondMean.o Sources/cCondMean.cpp
 
+${OBJECTDIR}/Sources/cCondVar.o: Sources/cCondVar.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cCondVar.o Sources/cCondVar.cpp
+
 ${OBJECTDIR}/Sources/cConst.o: Sources/cConst.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
@@ -141,6 +149,11 @@ ${OBJECTDIR}/Sources/cNormResiduals.o: Sources/cNormResiduals.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cNormResiduals.o Sources/cNormResiduals.cpp
 
+${OBJECTDIR}/Sources/cRegArchGradient.o: Sources/cRegArchGradient.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchGradient.o Sources/cRegArchGradient.cpp
+
 ${OBJECTDIR}/Sources/cRegArchModel.o: Sources/cRegArchModel.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
@@ -150,6 +163,11 @@ ${OBJECTDIR}/Sources/cRegArchValue.o: Sources/cRegArchValue.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cRegArchValue.o Sources/cRegArchValue.cpp
+
+${OBJECTDIR}/Sources/cStudentResiduals.o: Sources/cStudentResiduals.cpp
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cStudentResiduals.o Sources/cStudentResiduals.cpp
 
 # Subprojects
 .build-subprojects:

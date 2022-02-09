@@ -37,6 +37,7 @@ namespace RegArchLib {
 		void ReAlloc(cDVector& theYt, cDMatrix& theXt) ;///< Memory reallocation
 		void ReAllocXt(uint theNRow, uint theNCol) ;
 		void PrintValue(ostream& theOut=cout, bool theHeader=true, char* theSep="\t") ;///< Print the datas
+		void ComputeMeanAndVar(double& theMean, double& theVar) ;
 	};
 
 	extern ostream& operator <<(ostream& theOut, cRegArchValue& theData) ;///< Print the datas

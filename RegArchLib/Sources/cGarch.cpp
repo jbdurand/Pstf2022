@@ -37,6 +37,22 @@ namespace RegArchLib {
 	}
 
 	/*!
+	 * \fn cAbstCondVar* cGarch::PtrCopy()
+	 */
+
+	cAbstCondVar* cGarch::PtrCopy() const
+	{
+		 cGarch *myGarch = new cGarch();
+
+		 myGarch->copy(*this);
+
+		 return myGarch;
+	}
+	// This is some comment by the teachers. It is included in
+	// the 3rd version delivered to the students, but is not
+	// supposed to appear anywhere in a subject source code.
+
+	/*!
 	 * \fn void cGarch::Delete(void)
 	 * \param void
 	 * \details Free memory
@@ -145,9 +161,48 @@ namespace RegArchLib {
 		}
 	}
 
+	/*!
+	 * \fn double cGarch::ComputeVar(uint theDate, const cRegArchValue& theData) const
+	 * \param int theDate: date of computation
+	 * \param const cRegArchValue& theData: past datas
+	 * \details theData is not updated here.
+	*/
+	double cGarch::ComputeVar(uint theDate, const cRegArchValue& theData) const 
+	{
+            // A completer
+
+	}
+
 	uint cGarch::GetNParam(void) const
 	{
-		// complete
+		return mvGarch.GetSize() ;
+	}
+
+
+	uint cGarch::GetNLags(void) const
+	{
+		// A completer
+	}
+
+	void cGarch::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
+	{
+		// A completer
+	}
+
+	void cGarch::RegArchParamToVector(cDVector& theDestVect, uint theIndex)
+	{
+	uint mySize = GetNParam() ;
+		if (theDestVect.GetSize() < mySize + theIndex)
+			throw cError("Wrong size") ;
+		mvGarch.SetSubVectorWithThis(theDestVect, theIndex) ;
+	}
+
+	void cGarch::VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex)
+	{
+		uint mySize = theSrcVect.GetSize() ;
+		if (GetNParam() + theIndex > mySize)
+			throw cError("Wrong size") ;
+		mvGarch.SetThisWithSubVector(theSrcVect, theIndex) ;
 	}
 
 	void cGarch::copy(const cGarch& theGarch)
