@@ -86,8 +86,8 @@ namespace RegArchLib {
 
 	double cStudentResiduals::LogDensity(double theX) const
 	{
-            double myStd = sqrt(mDistrParameter[0]/(mDistrParameter[0]-2.0)) ;
-            return StudentLogDensity(theX*myStd, mDistrParameter[0]) + log(myStd) ;
+	double myStd = sqrt(mDistrParameter[0]/(mDistrParameter[0]-2.0)) ;
+		return StudentLogDensity(theX*myStd, mDistrParameter[0]) + log(myStd) ;
 
 	}
 

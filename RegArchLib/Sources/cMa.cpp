@@ -137,7 +137,12 @@ namespace RegArchLib {
 	 */
 	double cMa::ComputeMean(uint theDate, const cRegArchValue& theData) const
 	{
-            // A completer
+		uint myq = mvMa.GetSize() ;
+
+		double myRes = 0.0 ;
+			for (register uint i = 1 ; i <= MIN(myq, theDate) ; i++)
+				myRes += mvMa[i-1] * theData.mUt[theDate-i] ;
+		return myRes ;
 	}
 
 	uint cMa::GetNParam(void) const

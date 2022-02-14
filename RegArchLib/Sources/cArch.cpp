@@ -152,8 +152,12 @@ namespace RegArchLib {
 	*/
 	double cArch::ComputeVar(uint theDate, const cRegArchValue& theDatas) const
 	{
-            // A completer
-    	}
+	uint myp = mvArch.GetSize() ;
+	double myRes = 0.0 ;
+		for (register uint i = 1 ; i <= MIN(myp, theDate) ; i++)
+			myRes += mvArch[i-1] * theDatas.mUt[theDate-i] * theDatas.mUt[theDate-i] ;
+		return myRes ;
+	}
 
 	uint cArch::GetNParam(void) const
 	{

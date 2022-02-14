@@ -169,7 +169,12 @@ namespace RegArchLib {
 	*/
 	double cGarch::ComputeVar(uint theDate, const cRegArchValue& theData) const 
 	{
-            // A completer
+		uint myq = mvGarch.GetSize() ;
+		double myRes = 0.0 ;
+		for (register uint j = 1 ; j <= MIN(myq, theDate) ; j++)
+			myRes += mvGarch[j-1] * theData.mHt[theDate-j] ;
+
+		return myRes ;
 
 	}
 

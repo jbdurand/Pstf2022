@@ -63,11 +63,6 @@ int main(int argc, char* argv[])
 	/*********
 	 * ARMA pur gaussien : gradient
 	 *******/
-
-	/*********
-	 * A faire : etendre a un modele ARMA / GARCH
-	 *******/
-        
 	cout << "Modele : " ;
 	myModelArma.Print() ;
 
