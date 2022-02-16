@@ -12,5 +12,5 @@
 #include "cGSLVector.h"
 #include "cGSLMatrix.h"
 
-#define WIN32_LEAN_AND_MEAN             // Exclure les en-têtes Windows rarement utilisés
+#define WIN32_LEAN_AND_MEAN             // Exclure les en-tetes Windows rarement utilises
 

@@ -34,10 +34,7 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
-OBJECTFILES= \
-	${OBJECTDIR}/Sources/StdAfxVectorAndMatrix.o \
-	${OBJECTDIR}/Sources/cGSLMatrix.o \
-	${OBJECTDIR}/Sources/cGSLVector.o
+OBJECTFILES=
 
 
 # C Compiler Flags
@@ -63,21 +60,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libVectorAndMatrix.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libVectorAndMatrix.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
-
-${OBJECTDIR}/Sources/StdAfxVectorAndMatrix.o: Sources/StdAfxVectorAndMatrix.cpp
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.c) -g -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/StdAfxVectorAndMatrix.o Sources/StdAfxVectorAndMatrix.cpp
-
-${OBJECTDIR}/Sources/cGSLMatrix.o: Sources/cGSLMatrix.cpp
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.c) -g -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cGSLMatrix.o Sources/cGSLMatrix.cpp
-
-${OBJECTDIR}/Sources/cGSLVector.o: Sources/cGSLVector.cpp
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.c) -g -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/cGSLVector.o Sources/cGSLVector.cpp
 
 # Subprojects
 .build-subprojects:

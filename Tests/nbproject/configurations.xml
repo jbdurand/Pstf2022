@@ -53,10 +53,11 @@
           </incDir>
         </ccTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/tests</output>
           <linkerAddLib>
             <pElem>../RegArchLib/dist/Debug/GNU-Linux</pElem>
-            <pElem>../VectorAndMatrix/build/Debug/GNU-Linux-x86</pElem>
-            <pElem>../Error/build/Debug/GNU-Linux-x86</pElem>
+            <pElem>../VectorAndMatrix/dist/Debug/GNU-Linux</pElem>
+            <pElem>../Error/dist/Debug/GNU-Linux</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibProjectItem>
@@ -68,7 +69,7 @@
                             WD="../RegArchLib"
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libRegArchLib.${CND_DLIB_EXT}">
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libRegArchLib.so">
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerLibProjectItem>
