@@ -16,7 +16,15 @@ namespace RegArchLib {
 	 */
 	void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cRegArchValue& theData)
 	{
-		// A completer
+		theData.ReAlloc(theNSample) ;
+		theModel.mResids->Generate(theNSample, theData.mEpst) ;
+		for (register uint t = 0 ; t < theNSample ; t++)
+		{	theData.mHt[t] = theModel.mVar->ComputeVar(t, theData) ;
+			if (theModel.mMean != NULL)
+				theData.mMt[t] = theModel.mMean->ComputeMean(t, theData) ;
+			theData.mUt[t] = sqrt(theData.mHt[t])*theData.mEpst[t] ;
+			theData.mYt[t] = theData.mMt[t] + theData.mUt[t] ;
+		}
 	}
 
 	/*!
@@ -40,7 +48,18 @@ namespace RegArchLib {
 	 */
 	double RegArchLLH(const cRegArchModel& theParam, cRegArchValue& theData)
 	{
-            // A completer
+	int mySize = (int)theData.mYt.GetSize() ;
+	double myRes = 0 ;
+		theData.mEpst = theData.mHt = theData.mMt = theData.mUt = 0.0 ;
+		for(register int t=0 ; t < mySize ; t++)
+		{	theData.mHt[t] = theParam.mVar->ComputeVar(t, theData) ;
+			if (theParam.mMean != NULL)
+				theData.mMt[t] = theParam.mMean->ComputeMean(t, theData) ;
+			theData.mUt[t] = theData.mYt[t] - theData.mMt[t] ;
+			theData.mEpst[t] = theData.mUt[t]/sqrt(theData.mHt[t]) ;
+			myRes += -0.5*log(theData.mHt[t]) + theParam.mResids->LogDensity(theData.mEpst[t]) ;
+		}
+		return myRes ;
 	}
 
 	/*!
@@ -55,7 +74,6 @@ namespace RegArchLib {
 
 	void RegArchGradLt(uint theDate, cRegArchModel& theParam, cRegArchValue& theValue, cRegArchGradient& theGradData, cDVector& theGradlt)
 	{	
-            // A completer
 	}
 
 
@@ -68,13 +86,11 @@ namespace RegArchLib {
 	 */
 	void RegArchGradLLH(cRegArchModel& theParam, cRegArchValue& theData, cDVector& theGradLLH)
 	{
-            // A completer
 	}
 
 
 	void NumericRegArchGradLLH(cRegArchModel& theModel, cRegArchValue& theValue, cDVector& theGradLLH, double theh)
 	{
-            // A completer
 	}
 
 } //namespace

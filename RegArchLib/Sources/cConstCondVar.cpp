@@ -119,7 +119,6 @@ namespace RegArchLib {
 		return mvCste ;
 	}
 
-<<<<<<< HEAD
 	/*!
 	 * \fn double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
 	 * \param int theDate: date of the computation
@@ -128,11 +127,9 @@ namespace RegArchLib {
 	 */
 	double cConstCondVar::ComputeVar(uint theDate, const cRegArchValue& theData) const
 	{
-		// A completer
+		return mvCste ;
 	}
 
-=======
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	uint cConstCondVar::GetNParam(void) const
 	{
 		return 1 ;

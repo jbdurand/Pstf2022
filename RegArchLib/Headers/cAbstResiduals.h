@@ -42,11 +42,7 @@ namespace RegArchLib {
 		void Set(double theValue, uint theIndex=0) ;
 		virtual void Print(ostream& theOut=cout) const=0 ; ///< Print the distribution type
 		friend ostream& operator <<(ostream& theOut, const cAbstResiduals& theAbstResisuals) ; ///< Print the distribution type
-<<<<<<< HEAD
 		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution 
-=======
-		virtual void Generate(uint theNSample, cDVector& theYt) const=0; ///< Draw a sample from residual distribution
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		virtual double LogDensity(double theX) const=0 ; ///< log density function
 		/** Return the number of parameters in distribution */
 		virtual uint GetNParam(void) const = 0 ;

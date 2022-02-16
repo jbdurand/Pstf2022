@@ -13,11 +13,7 @@
  \author Jean-Baptiste DURAND, Ollivier TARAMASCO
  \date dec-18-2006 - Last change feb-18-2011
 */
-
-
-
 namespace RegArchLib {
-// using namespace RegArchLib;
 
 extern _DLLEXPORT_ void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cRegArchValue& theData) ; ///< Simulation of a general RegArch Model
 extern _DLLEXPORT_ double RegArchLLH(const cRegArchModel& theParam, cDVector* theYt, cDMatrix* theXt=NULL) ; ///< Log-Likelihood of a general RegArch Model

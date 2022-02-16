@@ -35,30 +35,16 @@ namespace RegArchLib {
 		virtual ~cCondMean() ; ///< A simple destructor
 		void Delete(void) ; ///< Free memory.
 		uint GetNMean(void) const ; ///< Return the number of mean components.
-<<<<<<< HEAD
 		std::vector<cAbstCondMean*> GetCondMean(void) const ; ///< Return mvCondMean
 		void SetOneMean(uint theWhatMean, eCondMeanEnum theCode) ; ///< Set the type of a given mean component. 
 		void SetOneMean(uint theWhatMean, cAbstCondMean& theAbstCondMean) ; ///< Set theWhatMean th component of the conditional mean model
 		cAbstCondMean* GetOneMean(uint theIndex) const ; ///< Return a pointer to the given mean component  (no object is allocated)
-=======
-		// Complete
-		// GetCondMean(void) const ; ///< Return mvCondMean
-		void SetOneMean(uint theWhatMean, eCondMeanEnum theCode) ; ///< Set the type of a given mean component. 
-		void SetOneMean(uint theWhatMean, cAbstCondMean& theAbstCondMean) ; ///< Set theWhatMean th component of the conditional mean model
-		// Complete
-		// GetOneMean(uint theIndex) const ; ///< Return a pointer to the given mean component  (no object is allocated)
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		void Print(ostream& theOut=cout) const ; ///< Print the conditional mean model
 		friend ostream& operator <<(ostream& theOut, const cCondMean& theCondMean) ; ///< Print the conditional mean model
 		void GetCondMeanType(eCondMeanEnum* theCodeType) const ; ///< Return the type of each mean component	
 		cCondMean& operator =(cCondMean& theSrc) ; ///< affectation operator
-<<<<<<< HEAD
 		double ComputeMean(uint theDate, const cRegArchValue& theData) const ; ///< Return conditional mean.
 		/** Number of parameters in CondMean */
-=======
-		// double ComputeMean() // Complete
-		/** Number of parameters in CondMean */
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 		uint GetNParam(void) const ;
 		double Get(uint theNumMean=0, uint theIndex=0, uint theNumParam=0) ;
 		uint GetNLags(void) const  ; ///< (Maximal) number of past gradients required to compute gradient at current time t.

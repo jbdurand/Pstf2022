@@ -83,11 +83,8 @@ namespace RegArchLib {
 		#endif // _DEBUG
 		}
 	}
-<<<<<<< HEAD
 
 	/*!
-=======
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	 * \fn inline eDistrTypeEnum cAbstResiduals::GetDistrType(void) const
 	  * \param void
 	 */

@@ -33,16 +33,12 @@ namespace RegArchLib {
 		double Get(uint theIndex=0, uint theNumParam=0) ;
 		void ReAlloc(uint theSize, uint theNumParam) ; ///< New memory allocation of parameters
 		void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) ; ///< New memory allocation of parameters
-<<<<<<< HEAD
 		double ComputeMean(uint theDate, const cRegArchValue& theData) const ; ///< Compute the conditional mean value
 		uint GetNParam(void) const ; ///< Number of parameters in that model part
 		uint GetNLags(void) const ; ///< Number of past gradients required to compute gradient at current time t.
 		void ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals) ;
 		void RegArchParamToVector(cDVector& theDestVect, uint theIndex) ;
 		void VectorToRegArchParam(const cDVector& theSrcVect, uint theIndex = 0) ;
-=======
-		uint GetNParam(void) const ;
->>>>>>> a2ee8b677bc6dca3eb14004cbfeeed8abd7450da
 	protected :
 		void copy(const cConst& theConst) ; /// < Copy attribute from instance
 
