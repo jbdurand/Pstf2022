@@ -75,7 +75,10 @@ namespace RegArchLib {
 	{	eNotKnown,
 		eCste,
 		eArch,
-		eGarch
+		eGarch,
+		eEgarch,
+		eAparch,
+		eTarch
 	}eCondVarEnum ;
 
 	/*!
@@ -86,7 +89,9 @@ namespace RegArchLib {
 	typedef enum eDistrTypeEnum
 	{	eUndefined,
 		eNormal,
-		eStudent
+		eStudent,
+		eGed, // Generalized error distribution http://en.wikipedia.org/wiki/Exponential_power_distribution
+		eSkewT	// Skewed Student-t http://cran.r-project.org/doc/packages/skewt.pdf
 	}eDistrTypeEnum ;
 
 

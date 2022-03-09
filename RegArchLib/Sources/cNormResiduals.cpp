@@ -54,20 +54,20 @@ namespace RegArchLib {
 
 	}
 	/*!
-	 * \fn void cNormResiduals::Generate(uint theNSample, cDVector& theEpst) const 
+	 * \fn void cNormResiduals::Generate(uint theNSample, cDVector& theYt) const 
 	 * \brief Draw a sample of N(0, 1) residuals.
 	 * \param uint theNSample: the sample size.
-	 * \param cDVector& theEpst: output parameter
+	 * \param cDVector& theYt: output parameter
 	 * \details: theYt is reallocated to size theNSample here.
 	 */
 	
-	void cNormResiduals::Generate(uint theNSample, cDVector& theEpst) const 
+	void cNormResiduals::Generate(uint theNSample, cDVector& theYt) const 
 	{
-		theEpst.ReAlloc(theNSample) ;
+		theYt.ReAlloc(theNSample) ;
 
 
 		for (register uint t = 0 ; t < theNSample ; t++)
-			theEpst[t] = gsl_ran_ugaussian(mtR) ;
+			theYt[t] = gsl_ran_ugaussian(mtR) ;
 	}
 
 	/*!
@@ -89,7 +89,7 @@ namespace RegArchLib {
 	{
 		return 0 ;
 	}
-	
+
 	/*!
 	 * \fn static void GradLogDensity(double theX, cDVector& theGrad)
 	 * \brief Compute the derivative of log density of a Gaussian distribution with respect to the random variable (theGrad[0])
@@ -99,7 +99,7 @@ namespace RegArchLib {
 	 */
 	static void GradLogDensity(double theX, cDVector& theGrad)
 	{
-		// A completer
+		theGrad[0] = -theX ;
 	}
 
 	/*!

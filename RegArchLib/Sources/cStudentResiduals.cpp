@@ -61,13 +61,19 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cStudentResiduals::Generate(uint theNSample, cDVector& theEpst) const
+	 * \fn void cStudentResiduals::Generate(uint theNSample, cDVector& theYt) const
 	 * \param uint theNSample: the sample size
-	 * \param cDVector& theEpst: the output vector
+	 * \param cDVector& theYt: the output vector
 	 */
-	void cStudentResiduals::Generate(uint theNSample, cDVector& theEpst) const
+	void cStudentResiduals::Generate(uint theNSample, cDVector& theYt) const
 	{
-		// A completer
+		theYt.ReAlloc(theNSample) ;
+		if (mDistrParameter[0] <= 2.0)
+			throw cError("wrong d.o.f.") ;
+
+	double myStd = sqrt(mDistrParameter[0]/(mDistrParameter[0]-2.0)) ;
+		for (register uint t = 0 ; t < theNSample ; t++)
+			theYt[t] = gsl_ran_tdist(mtR, mDistrParameter[0])/myStd ;
 	}
 
 	/*!
@@ -113,7 +119,11 @@ namespace RegArchLib {
 	 */
 	static void StudentGradLogDensity(double theX, double theDof, cDVector& theGrad)
 	{
-		// A completer
+	double myt2 = theX * theX ;
+	double myAux1 = myt2+theDof ;
+		theGrad[0] = -(theDof+1)*theX/myAux1 ;
+	double myAux2 = log(myAux1)-gsl_sf_psi((theDof+1)/2.0)-log(theDof)+gsl_sf_psi(theDof/2.0) ;
+		theGrad[1] = -0.5*(myAux2 + (1 - myt2)/myAux1) ;
 	}
 
 	/*!
@@ -126,7 +136,15 @@ namespace RegArchLib {
 	 */
 	static void GradLogDensity(double theX, cDVector& theGrad, const cDVector& theDistrParam)
 	{
-		// A completer
+	double	myDof = theDistrParam[0],
+			myStd = sqrt(myDof/(myDof-2.0)) ;
+		StudentGradLogDensity(theX*myStd, myDof, theGrad) ;
+
+	double	myAux1 = myDof - 2.0,
+			myAux2 = myAux1 * myDof ;
+		theGrad[1] -=  (theX * theGrad[0]/(myAux1*sqrt(myAux2)) + 1.0/myAux2) ;
+		theGrad[0] *=  myStd ;
+
 	}
 
 	/*!
@@ -155,5 +173,9 @@ namespace RegArchLib {
 			throw cError("Wrong size") ;
 		mDistrParameter[0] = theSrcVect[theIndex] ;
 	}
+
+	/*
+	 * (2*sqrt(n-2)*gamma((n+1)/2))/(sqrt(PI)*(n-1)*gamma(n/2))
+	 */
 
 }//namespace

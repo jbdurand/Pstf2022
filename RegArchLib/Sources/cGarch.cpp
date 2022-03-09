@@ -48,9 +48,6 @@ namespace RegArchLib {
 
 		 return myGarch;
 	}
-	// This is some comment by the teachers. It is included in
-	// the 3rd version delivered to the students, but is not
-	// supposed to appear anywhere in a subject source code.
 
 	/*!
 	 * \fn void cGarch::Delete(void)
@@ -109,14 +106,14 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cGarch::Set(double theValue, uint theIndex, uint theNumParam)
+	 * \fn void cGarch::Set(const double theValue, uint theIndex, uint theNumParam)
 	 * \brief fill the parameters vector
-	 * \param double theValue: the value of the "theIndex" th lag. Default 0.
+	 * \param const double theValue: the value of the "theIndex" th lag. Default 0.
 	 * \param uint theIndex: the index.
 	 * \param uint theNumParam: =0, GARCH parameters
 	 * \details mvGarch[theIndex]= theValue
 	 */
-	void cGarch::Set(double theValue, uint theIndex, uint theNumParam)
+	void cGarch::Set(const double theValue, uint theIndex, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
 				if (theIndex < mvGarch.GetSize())
@@ -186,12 +183,18 @@ namespace RegArchLib {
 
 	uint cGarch::GetNLags(void) const
 	{
-		// A completer
+		return  mvGarch.GetSize() ;
 	}
 
 	void cGarch::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
 	{
-		// A completer
+		uint myq = mvGarch.GetSize() ;
+		uint myBegIndex = theGradData.GetNMeanParam() + theBegIndex ;
+		register uint j ;
+		for (j = 1 ; j <= MIN(myq, theDate) ; j++)
+			theGradData.mCurrentGradVar[myBegIndex+j-1] += theData.mHt[theDate-j] ;
+		for (j = 1 ; j <= MIN(myq, theDate) ; j++)
+			theGradData.mCurrentGradVar += mvGarch[j-1] * theGradData.mGradHt[j-1] ;
 	}
 
 	void cGarch::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

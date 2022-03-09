@@ -15,12 +15,15 @@
 */
 namespace RegArchLib {
 
+extern _DLLEXPORT_ void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cDVector& theYt) ; ///< Simulation of a general RegArch Model
 extern _DLLEXPORT_ void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cRegArchValue& theData) ; ///< Simulation of a general RegArch Model
 extern _DLLEXPORT_ double RegArchLLH(const cRegArchModel& theParam, cDVector* theYt, cDMatrix* theXt=NULL) ; ///< Log-Likelihood of a general RegArch Model
 extern _DLLEXPORT_ double RegArchLLH(const cRegArchModel& theParam, cRegArchValue& theData) ; ///< Log-Likelihood of a general RegArch Model
-extern _DLLEXPORT_ void RegArchGradLt(uint theDate, cRegArchModel& theParam, cRegArchValue& theData, cRegArchGradient& theGradData, cDVector& theGradlt) ;
+extern _DLLEXPORT_ void RegArchGradLt(int theDate, cRegArchModel& theParam, cRegArchValue& theData, cRegArchGradient& theGradData, cDVector& theGradlt) ;
 extern _DLLEXPORT_ void RegArchGradLLH(cRegArchModel& theParam, cRegArchValue& theData, cDVector& theGradLLH) ;
+extern _DLLEXPORT_ void RegArchLLHAndGradLLH(cRegArchModel& theParam, cRegArchValue& theValue, double& theLLH, cDVector& theGradLLH) ;
 extern _DLLEXPORT_ void NumericRegArchGradLLH(cRegArchModel& theModel, cRegArchValue& theValue, cDVector& theGradLLH, double theh = 1e-3) ;
+extern _DLLEXPORT_ void NumericRegArchHessLLH(cRegArchModel& theModel, cRegArchValue& theValue, cDMatrix& theHessLLH, double theh = 1e-3) ;
 
 }
 

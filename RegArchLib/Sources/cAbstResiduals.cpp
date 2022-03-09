@@ -79,7 +79,7 @@ namespace RegArchLib {
 		#ifndef _DEBUG
 			gsl_rng_set(mtR, (unsigned long int)time(NULL)) ;
 		#else
-			gsl_rng_set(mtR, 0) ; // Pour avoir toujours la m�me s�rie simul�e quand on teste
+			gsl_rng_set(mtR, 0) ; // Pour avoir toujours la meme serie simulee quand on teste
 		#endif // _DEBUG
 		}
 	}

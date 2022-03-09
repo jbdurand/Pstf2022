@@ -319,7 +319,6 @@ namespace RegArchLib {
 
 	void cRegArchModel::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData)
     {
-		// Pas forcement utile pour le moment
     }
 
 	void cRegArchModel::RegArchParamToVector(cDVector& theDestVect) const

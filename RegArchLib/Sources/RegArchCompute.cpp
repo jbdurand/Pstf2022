@@ -27,6 +27,22 @@ namespace RegArchLib {
 		}
 	}
 
+
+	/*!
+	 * \fn void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cDVector& theYt)
+	 * \param uint theNSample: size of the sample
+	 * \param const cRegArchModel& theModel: the RegArch model
+	 * \param cDVector& theYt: output parameter. 
+	 */
+	void RegArchSimul(uint theNSample, const cRegArchModel& theModel, cDVector& theYt)
+	{
+	cRegArchValue myValue(theNSample) ;
+		RegArchSimul(theNSample, theModel, myValue) ;
+		theYt = myValue.mYt ;
+
+	}
+
+
 	/*!
 	 * \fn double RegArchLLH(const cRegArchModel& theParam, cDVector* theYt, cDMatrix* theXt)
 	 * \param const cRegArchModel& theParam: the model
@@ -36,7 +52,7 @@ namespace RegArchLib {
 	 */
 	double RegArchLLH(const cRegArchModel& theParam, cDVector* theYt, cDMatrix* theXt)
 	{
-	cRegArchValue myValue(theYt, theXt) ;
+		cRegArchValue myValue(theYt, theXt) ;
 		return RegArchLLH(theParam, myValue) ;
 	}
 
@@ -72,25 +88,105 @@ namespace RegArchLib {
 	 * \param cDVector& theGradlt: gradient of the log-likelihood, at current time theDate
 	 */
 
-	void RegArchGradLt(uint theDate, cRegArchModel& theParam, cRegArchValue& theValue, cRegArchGradient& theGradData, cDVector& theGradlt)
-	{	
+	void RegArchGradLt(int theDate, cRegArchModel& theParam, cRegArchValue& theValue, cRegArchGradient& theGradData, cDVector& theGradlt)
+	{	theGradlt = 0.0 ;
+		theValue.mHt[theDate] = theParam.mVar->ComputeVar(theDate, theValue) ;
+		if (theParam.mMean != NULL)
+			theValue.mMt[theDate] = theParam.mMean->ComputeMean(theDate, theValue) ;
+		theValue.mUt[theDate] = theValue.mYt[theDate] - theValue.mMt[theDate] ;
+		double mySigmat = sqrt(theValue.mHt[theDate]) ;
+		theValue.mEpst[theDate] = theValue.mUt[theDate]/mySigmat ;
+		theParam.mVar->ComputeGrad(theDate, theValue, theGradData, theParam.mResids) ;
+		if (theParam.mMean != NULL)
+			theParam.mMean->ComputeGrad(theDate, theValue, theGradData, theParam.mResids) ;
+		theParam.mResids->ComputeGrad(theDate, theValue, theGradData) ;
+		theGradData.mCurrentGradSigma = theGradData.mCurrentGradVar / (2.0 * mySigmat) ;
+		theGradData.mCurrentGradEps = -1.0*(theValue.mEpst[theDate] * theGradData.mCurrentGradSigma + theGradData.mCurrentGradMu)/ mySigmat ;
+		theGradlt =  (-1.0/mySigmat) * theGradData.mCurrentGradSigma  + theGradData.mCurrentGradDens[0] * theGradData.mCurrentGradEps ;
+		uint myNLawParam = theGradData.GetNDistrParameter() ;
+		uint myIndex = theGradData.GetNMeanParam() + theGradData.GetNVarParam() ;
+		for (register uint i =  1 ; i <= myNLawParam ; i++)
+			theGradlt[i+myIndex-1] += theGradData.mCurrentGradDens[i] ;
+			// Update
+		theGradData.Update() ;
 	}
 
+	void RegArchLtAndGradLt(int theDate, cRegArchModel& theParam, cRegArchValue& theValue, cRegArchGradient& theGradData, double& theLt, cDVector& theGradlt)
+	{
+		theGradlt = 0.0 ;
+		theValue.mHt[theDate] = theParam.mVar->ComputeVar(theDate, theValue) ;
+		if (theParam.mMean != NULL)
+			theValue.mMt[theDate] = theParam.mMean->ComputeMean(theDate, theValue) ;
+		theValue.mUt[theDate] = theValue.mYt[theDate] - theValue.mMt[theDate] ;
+	double mySigmat = sqrt(theValue.mHt[theDate]) ;
+		theValue.mEpst[theDate] = theValue.mUt[theDate]/mySigmat ;
+		theParam.mVar->ComputeGrad(theDate, theValue, theGradData, theParam.mResids) ;
+		if (theParam.mMean != NULL)
+			theParam.mMean->ComputeGrad(theDate, theValue, theGradData, theParam.mResids) ;
+		theParam.mResids->ComputeGrad(theDate, theValue, theGradData) ;
+		theGradData.mCurrentGradSigma = theGradData.mCurrentGradVar / (2.0 * mySigmat) ;
+		theGradData.mCurrentGradEps = -1.0*(theValue.mEpst[theDate] * theGradData.mCurrentGradSigma + theGradData.mCurrentGradMu)/ mySigmat ;
+		theGradlt =  (-1.0/mySigmat) * theGradData.mCurrentGradSigma  + theGradData.mCurrentGradDens[0] * theGradData.mCurrentGradEps ;
+	uint myNLawParam = theGradData.GetNDistrParameter() ;
+	uint myIndex = theGradData.GetNMeanParam() + theGradData.GetNVarParam() ;	
+		for (register uint i =  1 ; i <= myNLawParam ; i++)
+			theGradlt[i+myIndex-1] += theGradData.mCurrentGradDens[i] ;
+			// Update
+		theGradData.Update() ;
+		theLt = -0.5*log(theValue.mHt[theDate]) + theParam.mResids->LogDensity(theValue.mEpst[theDate]) ; 
+	}
 
-	/*!
-	 * \brief Compute the gradient of the log-likelihood
-	 * \fn void RegArchGradLLH(cRegArchModel& theParam, cRegArchValue& theData, cDVector& theGradLLH)
-	 * \param const cRegArchModel& theParam: the model
-	 * \param cRegArchValue& theData: contains the observations. Used to stored computed residuals, standardized residuals, etc.
-	 * \param cDVector& theGradLLH: gradient of the log-likelihood
-	 */
 	void RegArchGradLLH(cRegArchModel& theParam, cRegArchValue& theData, cDVector& theGradLLH)
 	{
+
+	cRegArchGradient myGradData=cRegArchGradient(&theParam) ;
+	cDVector myGradlt(myGradData.GetNParam()) ;
+		theGradLLH = 0.0L ;
+		for (register int t = 0 ; t < (int)theData.mYt.GetSize() ; t++)
+		{	RegArchGradLt(t, theParam, theData, myGradData, myGradlt) ;
+			theGradLLH += myGradlt ;
+		}
 	}
 
+	void RegArchLLHAndGradLLH(cRegArchModel& theParam, cRegArchValue& theValue, double& theLLH, cDVector& theGradLLH)
+	{
+	cRegArchGradient myGradData(&theParam) ;
+	cDVector myGradlt(myGradData.GetNParam()) ;
+	double myLt ;
+		theGradLLH = 0.0L ;
+		theLLH = 0.0 ;
+		for (register int t = 0 ; t < (int)theValue.mYt.GetSize() ; t++)
+		{	RegArchLtAndGradLt(t, theParam, theValue, myGradData, myLt, myGradlt) ;
+			theGradLLH += myGradlt ;
+			theLLH += myLt ;
+		}
+	}
 
 	void NumericRegArchGradLLH(cRegArchModel& theModel, cRegArchValue& theValue, cDVector& theGradLLH, double theh)
 	{
+	double myLLH0 = RegArchLLH(theModel, theValue) ;
+	int myNParam = (int)theGradLLH.GetSize() ;
+	//int myNLawParam = (int)theModel.mResids->GetNParam() ;
+	//eCondVarEnum myVarType = theModel.mVar->GetCondVarType() ;
+
+	cDVector myVectParam(myNParam), myVect0(myNParam) ;
+	
+		theModel.RegArchParamToVector(myVectParam) ;
+		myVect0 = myVectParam ;
+		for (register int i = 0 ; i < myNParam ; i++)
+		{
+		double myhh = fabs(theh * myVectParam[i]) ;
+			if (myhh < 1e-16)
+				myhh = theh ;
+			myVectParam[i] += myhh ;
+			theModel.VectorToRegArchParam(myVectParam) ;
+
+		
+		double myLLH1 = RegArchLLH(theModel, theValue) ;
+			theGradLLH[i] = (myLLH1 - myLLH0)/myhh ;
+			myVectParam[i] -= myhh ;
+		}
+		theModel.VectorToRegArchParam(myVect0) ;
 	}
 
 } //namespace

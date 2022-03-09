@@ -31,7 +31,7 @@ namespace RegArchLib {
 		void Print(ostream& theOut=cout) const ; ///< Print the parameters
 		void ReAlloc(uint theSize, uint theNumParam=0) ; ///< Allocation of the model parameters
 		void ReAlloc(const cDVector& theVectParam, uint theNumParam=0) ; ///< Allocation of the model parameters
-		void Set(double theValue, uint theIndex=0, uint theNumParam=0) ; ///< Set model parameters.
+		void Set(const double theValue, uint theIndex=0, uint theNumParam=0) ; ///< Set model parameters.
 		void Set(const cDVector& theVectParam, uint theNumParam=0) ; ///< Set model parameters.
 		double Get(uint theIndex=0, uint theNumParam=0) ;
 		double ComputeVar(uint theDate, const cRegArchValue& theData) const;	///< Return conditional variance.

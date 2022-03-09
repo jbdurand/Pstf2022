@@ -91,14 +91,14 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cArch::Set(double theValue, uint theIndex, uint theNumParam)
+	 * \fn void cArch::Set(const double theValue, uint theIndex, uint theNumParam)
 	 * \brief fill the parameters vector
-	 * \param double theValue: the value of the "theIndex" th lag. Default 0.
+	 * \param const double theValue: the value of the "theIndex" th lag. Default 0.
 	 * \param uint theIndex: the index.
 	 * \param uint theNumParam: =0, mvConst, =1, ARCH parameters
 	 * \details mvArch[theIndex] = theValue or mvConst = theValue
 	 */
-	void cArch::Set(double theValue, uint theIndex, uint theNumParam)
+	void cArch::Set(const double theValue, uint theIndex, uint theNumParam)
 	{	switch (theNumParam)
 		{	case 0 :
 				if (theIndex < mvArch.GetSize())
@@ -150,12 +150,12 @@ namespace RegArchLib {
 	 * \param const cRegArchValue& theData: past datas
 	 * \details theData is not updated here.
 	*/
-	double cArch::ComputeVar(uint theDate, const cRegArchValue& theDatas) const
+	double cArch::ComputeVar(uint theDate, const cRegArchValue& theData) const
 	{
 	uint myp = mvArch.GetSize() ;
 	double myRes = 0.0 ;
 		for (register uint i = 1 ; i <= MIN(myp, theDate) ; i++)
-			myRes += mvArch[i-1] * theDatas.mUt[theDate-i] * theDatas.mUt[theDate-i] ;
+			myRes += mvArch[i-1] * theData.mUt[theDate-i] * theData.mUt[theDate-i] ;
 		return myRes ;
 	}
 
@@ -166,12 +166,18 @@ namespace RegArchLib {
 
 	uint cArch::GetNLags(void) const
 	{
-		// A completer
+		return mvArch.GetSize() ;
 	}
 
 	void cArch::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
 	{
-		// A completer	
+		uint myp = mvArch.GetSize() ;
+		uint myBegIndex = theGradData.GetNMeanParam() + theBegIndex ;
+		register uint i ;
+		for (i = 1 ; i <= MIN(myp, theDate) ; i++)
+			theGradData.mCurrentGradVar[myBegIndex+i-1] = theData.mUt[theDate - i]*theData.mUt[theDate - i] ;
+		for (i = 1 ; i <= MIN(myp, theDate) ; i++)
+			theGradData.mCurrentGradVar -= 2.0 * mvArch[i-1] * theData.mUt[theDate - i] * theGradData.mGradMt[i-1] ;
 	}
 
 	void cArch::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

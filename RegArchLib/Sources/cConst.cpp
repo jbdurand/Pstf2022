@@ -57,14 +57,14 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cConst::Set(double theValue, uint theIndex, uint theNumParam)
+	 * \fn void cConst::Set(const double theValue, uint theIndex, uint theNumParam)
 	 * \brief fill the parameters vector
-	 * \param double theValue: the constant value.
+	 * \param const double theValue: the constant value.
 	 * \param uint theIndex: not used here. Default 0.
 	 * \param uint theNumParam: not used for cConst model. Default 0.
 	 * \details mvConst = theValue
 	 */
-	void cConst::Set(double theValue, uint theIndex, uint theNumParam)
+	void cConst::Set(const double theValue, uint theIndex, uint theNumParam)
 	{	mvConst = theValue ;
 	}
 
@@ -129,13 +129,12 @@ namespace RegArchLib {
 	}
 
 	uint cConst::GetNLags(void) const
-	{
-		// A completer
+	{	return 0 ;
 	}
 
 	void cConst::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResids)
 	{
-		// A completer
+		theGradData.mCurrentGradMu[theBegIndex] += 1.0 ;
 	}
 
 	void cConst::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

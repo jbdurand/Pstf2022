@@ -74,14 +74,14 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cAr::Set(double theValue, uint theIndex, uint theNumParam)
+	 * \fn void cAr::Set(const double theValue, uint theIndex, uint theNumParam)
 	 * \brief fill the parameters vector
-	 * \param double theValue: the value of the "theIndex" th lag. Default 0.
+	 * \param const double theValue: the value of the "theIndex" th lag. Default 0.
 	 * \param uint theIndex: the index.
 	 * \param uint theNumParam: not used for AR model. Default 0.
 	 * \details mvAr[theIndex] = theValue
 	 */
-	void cAr::Set(double theValue, uint theIndex, uint theNumParam)
+	void cAr::Set(const double theValue, uint theIndex, uint theNumParam)
 	{	if (theIndex < mvAr.GetSize())
 			mvAr[theIndex] = theValue ;
 		else
@@ -151,13 +151,14 @@ namespace RegArchLib {
 
 	uint cAr::GetNLags(void) const
 	{
-		// A completer
+		return 0 ;
 	}
 
 
 	void cAr::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData,  uint theBegIndex, cAbstResiduals* theResids)
 	{
-		// A completer
+		for (register uint i = 1 ; i <= MIN(mvAr.GetSize(), theDate) ; i++)
+			theGradData.mCurrentGradMu[theBegIndex+i-1] += theValue.mYt[theDate - i] ;
 	}
 
 	void cAr::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

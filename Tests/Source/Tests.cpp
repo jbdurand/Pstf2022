@@ -34,22 +34,34 @@ int main(int argc, char* argv[])
 	myCondMeanArma.SetOneMean(0, myConst) ;
 	myCondMeanArma.SetOneMean(1, myAr) ;
 	myCondMeanArma.SetOneMean(2, myMa) ;
-	
-        /*********
-	 * A faire : etendre variance ARCH / GARCH
-	 *******/
-        
-	cConstCondVar myConstVar(1.0) ;
 
+	const double myConstVar = 1. ;
+        cConstCondVar myConstCondVar(myConstVar);
+
+	cDVector myArch(2) ;
+	myArch[0] = 0.1 ;
+	myArch[1] = 0.2 ;
+        
+        cArch mycArch(2);
+        mycArch.Set(myArch);
+
+        cDVector myGarch(1) ;
+	myGarch[0] = 0.4 ;
+        
+        cGarch mycGarch(1);
+        mycGarch.Set(myGarch);
+        
 	cCondVar myCondVar ;
-	myCondVar.SetOneVar(0, myConstVar) ;
-	
+	myCondVar.SetOneVar(0, myConstCondVar) ;
+        myCondVar.SetOneVar(1, mycArch) ;
+        myCondVar.SetOneVar(1, mycGarch) ;
+        
 	cNormResiduals myNormResid ;
 
 	cRegArchModel myModelArma ;
 	myModelArma.SetMean(myCondMeanArma) ;
-	myModelArma.SetVar(myCondVar) ;
 	myModelArma.SetResid(myNormResid) ;
+	myModelArma.SetVar(myCondVar) ;
 	cout << "Modele : " ;
 	myModelArma.Print() ;
 	
@@ -65,7 +77,7 @@ int main(int argc, char* argv[])
 
 
 	/*********
-	 * ARMA pur gaussien : gradient
+	 * ARMA / GARCH Student : gradient
 	 *******/
 	cout << "Modele : " ;
 	myModelArma.Print() ;
@@ -82,19 +94,7 @@ int main(int argc, char* argv[])
 	cout << "Grad calcule" << endl << myGrad1 ;
 	cDVector myDiff = myGrad0 - myGrad1 ;
 	for (register uint i = 0 ; i < myNParam ; i++)
-        {
-		if (myGrad0[i] != 0)
-                {
-                    myDiff[i] /= myGrad0[i] ;
-                }
-                else
-                {
-                    if (myGrad0[i] == 0)
-                        myDiff[i] = 0.0;
-                    else
-                        myDiff[i] = nanf("");
-                }
-        }
+		myDiff[i] /= myGrad0[i] ;
 	cout << "erreur relative (%)" << endl << 100*myDiff ;
 
 

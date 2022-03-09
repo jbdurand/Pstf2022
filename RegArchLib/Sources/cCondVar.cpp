@@ -205,12 +205,20 @@ namespace RegArchLib {
 
 	uint cCondVar::GetNLags(void) const
 	{
-		// A completer
+		uint myNLags = 0 ;
+		for (register uint i = 0 ; i < mvNCondVar ; i++)
+			myNLags = MAX(myNLags, mvCondVar[i]->GetNLags());
+		return myNLags ;
 	}
 
 	void cCondVar::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData, cAbstResiduals* theResids)
 	{
-		// A completer
+		uint myIndex = 0 ;
+		theGradData.mCurrentGradVar = 0.0L ;
+		for (register uint i = 0 ; i < mvNCondVar ; i++)
+		{	mvCondVar[i]->ComputeGrad(theDate, theValue, theGradData, myIndex, theResids) ;
+			myIndex += mvCondVar[i]->GetNParam() ;
+		}
 	}
 
 

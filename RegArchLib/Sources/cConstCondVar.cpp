@@ -86,14 +86,14 @@ namespace RegArchLib {
 	}
 
 	 /*!
-	  * \fn void cConstCondVar::Set(double theValue, uint theIndex, uint theNumParam)
+	  * \fn void cConstCondVar::Set(const double theValue, uint theIndex, uint theNumParam)
 	  * \brief fill the parameters vector
-	  * \param double theValue: the constant value.
+	  * \param const double theValue: the constant value.
 	  * \param uint theIndex: not used here. Default 0.
 	  * \param uint theNumParam: not used for cConstCondVar model. Default 0.
 	  * \details mvCste = theValue
 	  */
-	void cConstCondVar::Set(double theValue, uint theIndex, uint theNumParam)
+	void cConstCondVar::Set(const double theValue, uint theIndex, uint theNumParam)
 	{
 		mvCste = theValue ;
 
@@ -136,12 +136,13 @@ namespace RegArchLib {
 	}
 	uint cConstCondVar::GetNLags(void) const
 	{
-		// A completer
+		return 0 ;
 	}
 
 	void cConstCondVar::ComputeGrad(uint theDate, const cRegArchValue& theData, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResiduals)
 	{
-		// A completer
+		// theGradData.mCurrentGradVar[theGradData.GetNMeanParam()+theBegIndex] = 1.0 ;
+		theGradData.mCurrentGradVar[theGradData.GetNMeanParam()+theBegIndex] += 1.0 ;
 	}
 
 	void cConstCondVar::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

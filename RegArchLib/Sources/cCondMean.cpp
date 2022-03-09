@@ -80,6 +80,8 @@ namespace RegArchLib {
 	 */
 	void cCondMean::SetOneMean(uint theWhatMean, cAbstCondMean& theAbstCondMean)
 	{
+		cAbstCondMean *theNewCondMean = NULL;
+		uint i;
 		if (theWhatMean > mvNCondMean)
 			throw cError("cCondMean::GetOneMean bad index") ;
 		else
@@ -197,7 +199,7 @@ namespace RegArchLib {
 
 	uint cCondMean::GetNParam(void) const
 	{
-	uint myNParam = 0 ;
+		uint myNParam = 0 ;
 		for (register uint i = 0 ; i < mvNCondMean ; i++)
 			myNParam += mvCondMean[i]->GetNParam() ;
 		return myNParam ;
@@ -205,14 +207,21 @@ namespace RegArchLib {
 
 	uint cCondMean::GetNLags(void) const
 	{
-		// A completer
+		uint myNLags = 0 ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+			myNLags = MAX(myNLags, mvCondMean[i]->GetNLags());
+		return myNLags ;
 	}
 
 	void cCondMean::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData, cAbstResiduals* theResids)
 	{
-		// A completer
+		uint myIndex = 0 ;
+		theGradData.mCurrentGradMu = 0.0L ;
+		for (register uint i = 0 ; i < mvNCondMean ; i++)
+		{	mvCondMean[i]->ComputeGrad(theDate, theValue, theGradData, myIndex, theResids) ;
+			myIndex += mvCondMean[i]->GetNParam() ;
+		}
 	}
-
 
 	void cCondMean::RegArchParamToVector(cDVector& theDestVect, uint theIndex) const
 	{

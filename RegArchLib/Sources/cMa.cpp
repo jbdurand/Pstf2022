@@ -73,23 +73,19 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cMa::Set(double theValue, uint theIndex=0, uint theNumParam)
-	 * \param double theValue: the theIndex th value
+	 * \fn void cMa::Set(const double theValue, uint theIndex=0, uint theNumParam)
+	 * \param const double theValue: the theIndex th value
 	 * \param uint theIndex: the index
 	 * \param uint theNumParam: not used here
 	 * \details mvMa[theIndex] = theValue
 	 */
-	void cMa::Set(double theValue, uint theIndex, uint theNumParam)
+	void cMa::Set(const double theValue, uint theIndex, uint theNumParam)
 	{
 		if (theIndex >= mvMa.GetSize())
 			throw cError("Bad index") ;
 		else
 			mvMa[theIndex]=theValue ;
 	}
-
-	// This is some comment by the teachers. It is included in
-	// the 3rd version delivered to the students, but is not
-	// supposed to appear anywhere in a subject source code.
 
 	/*!
 	 * \fn void cMa::Set(const cDVector& theVectParam, uint theNumParam)
@@ -119,7 +115,7 @@ namespace RegArchLib {
 	}
 
 	/*!
-	 * \fn void cAr::ReAlloc(const cDVector& theVectParam, uint theNumParam)
+	 * \fn void cMa::ReAlloc(const cDVector& theVectParam, uint theNumParam)
 	 * \param const cDVector& theVectParam: the vector of AR coefficients
 	 * \param uint theNumParam: not used here.
 	 * \details new allocation of mvAr
@@ -151,12 +147,17 @@ namespace RegArchLib {
 	}
 	uint cMa::GetNLags(void) const
 	{
-		// A completer
+		return mvMa.GetSize() ;
 	}
 
 	void cMa::ComputeGrad(uint theDate, const cRegArchValue& theValue, cRegArchGradient& theGradData, uint theBegIndex, cAbstResiduals* theResids)
 	{
-		// A completer
+	uint myq = mvMa.GetSize() ;
+	register uint i ;
+		for (i = 1 ; i <= MIN(myq, theDate) ; i++)
+			theGradData.mCurrentGradMu[theBegIndex+i-1] += theValue.mUt[theDate - i] ;
+		for (i = 1 ; i <= MIN(myq, theDate) ; i++)
+			theGradData.mCurrentGradMu -=  mvMa[i-1] * theGradData.mGradMt[i-1] ;
 	}
 
 	void cMa::RegArchParamToVector(cDVector& theDestVect, uint theIndex)

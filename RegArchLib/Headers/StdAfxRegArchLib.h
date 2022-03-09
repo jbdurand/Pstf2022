@@ -12,6 +12,8 @@
 #include "StdAfxError.h"
 #include "StdAfxVectorAndMatrix.h"
 
+#include <gsl/gsl_multimin.h>
+
 #include "RegArchDef.h"
 #include "cAbstCondMean.h"
 #include "cAbstCondVar.h"
@@ -37,7 +39,6 @@
 
 #define WIN32_LEAN_AND_MEAN             // Exclure les en-tetes Windows rarement utilises
 
-// This is some comment by the teachers. It is included in
-// the 3rd version delivered to the students, but is not
-// supposed to appear anywhere in a subject source code.
+
+
 // TODO: faites reference ici aux en-tetes supplementaires necessaires au programme
