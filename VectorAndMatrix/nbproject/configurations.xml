@@ -43,21 +43,36 @@
   <confs>
     <conf name="Debug" type="2">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <ccTool>
           <incDir>
+            <pElem>../Error/Headers</pElem>
             <pElem>Headers</pElem>
           </incDir>
         </ccTool>
       </compileType>
+      <item path="Headers/StdAfxVectorAndMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cGSLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cGSLVector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sources/StdAfxVectorAndMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/cGSLMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/cGSLVector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -73,6 +88,18 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="Headers/StdAfxVectorAndMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cGSLMatrix.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/cGSLVector.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Sources/StdAfxVectorAndMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/cGSLMatrix.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/cGSLVector.cpp" ex="false" tool="1" flavor2="0">
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>
